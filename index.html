@@ -6,6 +6,8 @@
   <link rel="icon" type="image/png" href="https://i.imgur.com/wUXyfJ5.png">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -13,6 +15,73 @@
       transition: background 0.3s, color 0.3s;
     }
 
+    /* ===== LOADING SCREEN ===== */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+
+    #loader h2 {
+      color: #e91e8c;
+      font-size: 36px;
+      margin: 0 0 10px;
+      letter-spacing: 2px;
+    }
+
+    #loader p {
+      color: white;
+      font-size: 16px;
+      margin: 0;
+      opacity: 0.7;
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    .loader-fill {
+      height: 100%;
+      width: 0%;
+      background: #e91e8c;
+      border-radius: 10px;
+      animation: loadfill 2s ease forwards;
+    }
+
+    @keyframes loadfill {
+      to { width: 100%; }
+    }
+
+    #loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: #e91e8c;
+      z-index: 9998;
+      transition: width 0.1s;
+    }
+
+    /* ===== HEADER ===== */
     header {
       text-align: center;
       background: url("https://i.imgur.com/jr3lys7.jpeg");
@@ -34,7 +103,25 @@
 
     h1 {
       font-size: 65px;
-      margin: 15px 0;
+      margin: 15px 0 5px;
+    }
+
+    /* ===== TYPING ANIMATION ===== */
+    .typing-container {
+      font-size: 22px;
+      color: #fce4f3;
+      margin: 0 0 15px;
+      min-height: 30px;
+    }
+
+    .typing-text {
+      border-right: 2px solid #e91e8c;
+      padding-right: 4px;
+      animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
     .dark-toggle {
@@ -49,9 +136,7 @@
       transition: background 0.2s;
     }
 
-    .dark-toggle:hover {
-      background: rgba(255,255,255,0.35);
-    }
+    .dark-toggle:hover { background: rgba(255,255,255,0.35); }
 
     .visitor-counter {
       display: inline-block;
@@ -86,6 +171,7 @@
 
     .nav a:hover { text-decoration: underline; }
 
+    /* ===== SECTIONS ===== */
     section {
       background: white;
       max-width: 900px;
@@ -172,6 +258,49 @@
     .contact-box p { margin: 8px 0; font-size: 17px; }
     .contact-box a { color: #e91e8c; text-decoration: none; font-weight: bold; }
 
+    /* ===== CONTACT FORM ===== */
+    .contact-form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px 18px;
+      border: 2px solid #f0c0dc;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      outline: none;
+      transition: border 0.2s, background 0.3s, color 0.3s;
+      background: white;
+      color: #333;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #e91e8c;
+    }
+
+    .contact-form textarea {
+      height: 140px;
+      resize: vertical;
+    }
+
+    .form-success {
+      display: none;
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -217,6 +346,16 @@
     body.dark .contact-box a { color: #f48fbf; }
     body.dark footer { background: #0a0a0a; }
     body.dark .certificate img { border-color: #444; }
+    body.dark .contact-form input,
+    body.dark .contact-form textarea {
+      background: #2a2a2a;
+      color: #f0f0f0;
+      border-color: #555;
+    }
+    body.dark .form-success {
+      background: #1b3a1f;
+      color: #81c784;
+    }
 
     @media (max-width: 600px) {
       h1 { font-size: 40px; }
@@ -231,10 +370,24 @@
 
 <body>
 
+  <!-- Loading Screen -->
+  <div id="loader">
+    <h2>Hajer Elaamri</h2>
+    <p>Cybersecurity Portfolio</p>
+    <div class="loader-bar">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="progressBar"></div>
+
   <header id="top">
     <img src="https://i.imgur.com/wUXyfJ5.png">
     <h1>Hajer's Portfolio</h1>
-    <br>
+    <div class="typing-container">
+      <span class="typing-text" id="typingText"></span>
+    </div>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙 Dark Mode</button>
     <div class="visitor-counter">👁️ Visitors: <span id="visitorCount">...</span></div>
     <div class="nav">
@@ -387,16 +540,26 @@
       <p>🔗 <a href="https://www.linkedin.com/in/hajer-elaamri-076920362/" target="_blank">LinkedIn Profile</a></p>
       <button onclick="window.open('Hajer_Elaamri_CV (1).pdf', '_blank')">📄 View My CV</button>
     </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h3 style="margin-bottom: 5px;">📩 Send Me a Message</h3>
+      <input type="text" id="formName" placeholder="Your Name" required>
+      <input type="email" id="formEmail" placeholder="Your Email" required>
+      <textarea id="formMessage" placeholder="Your Message..."></textarea>
+      <button onclick="sendMessage()">Send Message 🚀</button>
+      <div class="form-success" id="formSuccess">✅ Message sent successfully! I'll get back to you soon.</div>
+    </div>
   </section>
 
   <footer>
     <p>© 2026 Hajer Elaamri | Cybersecurity Portfolio</p>
   </footer>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { getDatabase, ref, runTransaction, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
@@ -412,14 +575,14 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const counterRef = ref(db, 'visitorCount');
+    const messagesRef = ref(db, 'messages');
 
-    // Only count once per session
-   if (!localStorage.getItem('counted')) {
-  localStorage.setItem('counted', 'yes');
-  runTransaction(counterRef, (current) => (current || 0) + 1);
-}
+    // Visitor counter
+    if (!localStorage.getItem('counted')) {
+      localStorage.setItem('counted', 'yes');
+      runTransaction(counterRef, (current) => (current || 0) + 1);
+    }
 
-    // Show the live count
     onValue(counterRef, (snapshot) => {
       const count = snapshot.val() || 0;
       const display = document.getElementById('visitorCount');
@@ -427,19 +590,59 @@
       const steps = 40;
       const increment = count / steps;
       const interval = 1500 / steps;
-
       const timer = setInterval(() => {
         current += increment;
-        if (current >= count) {
-          current = count;
-          clearInterval(timer);
-        }
+        if (current >= count) { current = count; clearInterval(timer); }
         display.textContent = Math.floor(current);
       }, interval);
     });
+
+    // Contact form send
+    window.sendMessage = function() {
+      const name = document.getElementById('formName').value.trim();
+      const email = document.getElementById('formEmail').value.trim();
+      const message = document.getElementById('formMessage').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill in all fields!');
+        return;
+      }
+
+      push(messagesRef, {
+        name,
+        email,
+        message,
+        time: new Date().toLocaleString()
+      }).then(() => {
+        document.getElementById('formName').value = '';
+        document.getElementById('formEmail').value = '';
+        document.getElementById('formMessage').value = '';
+        const success = document.getElementById('formSuccess');
+        success.style.display = 'block';
+        setTimeout(() => success.style.display = 'none', 4000);
+      }).catch(() => {
+        alert('Something went wrong. Please try again.');
+      });
+    };
   </script>
 
   <script>
+    // ===== LOADING SCREEN =====
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+        setTimeout(() => document.getElementById('loader').style.display = 'none', 600);
+      }, 2200);
+    });
+
+    // ===== SCROLL PROGRESS BAR =====
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
     // ===== DARK MODE =====
     function toggleDark() {
       document.body.classList.toggle('dark');
@@ -457,6 +660,41 @@
       document.body.classList.add('dark');
       document.getElementById('darkToggle').textContent = '☀️ Light Mode';
     }
+
+    // ===== TYPING ANIMATION =====
+    const titles = [
+      'Cybersecurity Student 🔐',
+      'Ethical Hacker 💻',
+      'Web Developer 🌐',
+      'Network Security Enthusiast 🛡️'
+    ];
+
+    let titleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingEl = document.getElementById('typingText');
+
+    function type() {
+      const current = titles[titleIndex];
+      if (isDeleting) {
+        typingEl.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingEl.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === current.length) {
+        setTimeout(() => isDeleting = true, 1500);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        titleIndex = (titleIndex + 1) % titles.length;
+      }
+
+      setTimeout(type, isDeleting ? 60 : 100);
+    }
+
+    setTimeout(type, 2500);
 
     // ===== SCROLL ANIMATIONS =====
     const sections = document.querySelectorAll('section');
