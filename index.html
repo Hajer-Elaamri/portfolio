@@ -3,8 +3,6 @@
 
 <head>
   <title>Hajer's Portfolio</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://i.imgur.com/wUXyfJ5.png">
 
   <style>
@@ -55,7 +53,6 @@
       background: rgba(255,255,255,0.35);
     }
 
-    /* Visitor Counter */
     .visitor-counter {
       display: inline-block;
       background: rgba(255,255,255,0.15);
@@ -96,9 +93,6 @@
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      transition: background 0.3s, box-shadow 0.3s;
-
-      /* Scroll Animation — hidden at start */
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, box-shadow 0.3s;
@@ -214,32 +208,15 @@
     .back-btn:hover { background: #c2185b; }
 
     /* ===== DARK MODE ===== */
-    body.dark {
-      background: #121212;
-      color: #f0f0f0;
-    }
-
-    body.dark section {
-      background: #1e1e1e;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
+    body.dark { background: #121212; color: #f0f0f0; }
+    body.dark section { background: #1e1e1e; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
     body.dark h3 { color: #f0f0f0; }
     body.dark p { color: #cccccc; }
-
     body.dark .project,
     body.dark .certificate,
     body.dark .skill-box,
-    body.dark .contact-box {
-      background: #2a2a2a;
-      border-left-color: #e91e8c;
-    }
-
-    body.dark .skill-tag {
-      background: #3a1a2e;
-      color: #f48fbf;
-    }
-
+    body.dark .contact-box { background: #2a2a2a; border-left-color: #e91e8c; }
+    body.dark .skill-tag { background: #3a1a2e; color: #f48fbf; }
     body.dark .contact-box a { color: #f48fbf; }
     body.dark footer { background: #0a0a0a; }
     body.dark .certificate img { border-color: #444; }
@@ -262,7 +239,7 @@
     <h1>Hajer's Portfolio</h1>
     <br>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙 Dark Mode</button>
-    <div class="visitor-counter">👁️ Visitors: <span id="visitorCount">0</span></div>
+    <div class="visitor-counter">👁️ Visitors: <span id="visitorCount">...</span></div>
     <div class="nav">
       <a href="#about">About Me</a>
       <a href="#skills">Skills</a>
@@ -438,30 +415,29 @@
       document.getElementById('darkToggle').textContent = '☀️ Light Mode';
     }
 
-    // ===== VISITOR COUNTER =====
-    let count = parseInt(localStorage.getItem('visitorCount') || '0');
-    if (!sessionStorage.getItem('visited')) {
-      count++;
-      localStorage.setItem('visitorCount', count);
-      sessionStorage.setItem('visited', 'yes');
-    }
+    // ===== VISITOR COUNTER — CountAPI (real server, works across all devices) =====
+    fetch('https://api.countapi.xyz/hit/hajer-portfolio-2026/visitors')
+      .then(res => res.json())
+      .then(data => {
+        const count = data.value;
+        const display = document.getElementById('visitorCount');
+        let current = 0;
+        const steps = 40;
+        const increment = count / steps;
+        const interval = 1500 / steps;
 
-    // Animate the number counting up
-    const display = document.getElementById('visitorCount');
-    let current = 0;
-    const duration = 1500;
-    const steps = 40;
-    const increment = count / steps;
-    const interval = duration / steps;
-
-    const counter = setInterval(() => {
-      current += increment;
-      if (current >= count) {
-        current = count;
-        clearInterval(counter);
-      }
-      display.textContent = Math.floor(current);
-    }, interval);
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= count) {
+            current = count;
+            clearInterval(timer);
+          }
+          display.textContent = Math.floor(current);
+        }, interval);
+      })
+      .catch(() => {
+        document.getElementById('visitorCount').textContent = '—';
+      });
 
     // ===== SCROLL ANIMATIONS =====
     const sections = document.querySelectorAll('section');
