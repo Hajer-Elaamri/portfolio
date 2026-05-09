@@ -133,7 +133,6 @@
     }
 
     button:hover { background: #c2185b; }
-    button:disabled { background: #aaa; cursor: not-allowed; }
 
     .certificate img { width: 100%; max-width: 500px; border-radius: 10px; margin-top: 15px; border: 2px solid #ddd; }
 
@@ -364,10 +363,10 @@
     <p>© 2026 Hajer Elaamri | Cybersecurity Portfolio</p>
   </footer>
 
-  <!-- Firebase (visitor counter only) -->
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { getDatabase, ref, runTransaction, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
@@ -383,7 +382,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const counterRef = ref(db, 'visitorCount');
+    const messagesRef = ref(db, 'messages');
 
+    // Visitor counter
     if (!localStorage.getItem('counted')) {
       localStorage.setItem('counted', 'yes');
       runTransaction(counterRef, (current) => (current || 0) + 1);
@@ -402,16 +403,8 @@
         display.textContent = Math.floor(current);
       }, interval);
     });
-  </script>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init({
-      publicKey: 'BJyFFRBnZDm2IlBHg',
-      privateKey: 'BR96SEh0k4nw4xd5D2kmp',
-    });
-
+    // Contact form
     window.sendMessage = function () {
       const name    = document.getElementById('formName').value.trim();
       const email   = document.getElementById('formEmail').value.trim();
@@ -422,15 +415,11 @@
         return;
       }
 
-      const sendBtn = document.querySelector('.contact-form button');
-      sendBtn.textContent = 'Sending…';
-      sendBtn.disabled = true;
-
-      emailjs.send('service_nmew72a', 'template_iw9op08', {
-        name:    name,
-        email:   email,
-        message: message,
-        time:    new Date().toLocaleString()
+      push(messagesRef, {
+        name,
+        email,
+        message,
+        time: new Date().toLocaleString()
       }).then(() => {
         document.getElementById('formName').value    = '';
         document.getElementById('formEmail').value   = '';
@@ -438,12 +427,8 @@
         const success = document.getElementById('formSuccess');
         success.style.display = 'block';
         setTimeout(() => success.style.display = 'none', 4000);
-      }).catch((err) => {
-        console.error('EmailJS error:', err);
+      }).catch(() => {
         alert('Something went wrong. Please try again.');
-      }).finally(() => {
-        sendBtn.textContent = 'Send Message 🚀';
-        sendBtn.disabled = false;
       });
     };
   </script>
