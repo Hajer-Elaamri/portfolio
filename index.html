@@ -44,7 +44,6 @@
     }
 
     @keyframes loadfill { to { width: 100%; } }
-
     #loader.hide { opacity: 0; pointer-events: none; }
 
     #progressBar {
@@ -408,11 +407,10 @@
   <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    const EMAILJS_PUBLIC_KEY  = 'BJyFFRBnZDm2IlBHg';
-    const EMAILJS_SERVICE_ID  = 'service_nmew72a';
-    const EMAILJS_TEMPLATE_ID = 'template_iw9op08';
-
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    emailjs.init({
+      publicKey: 'BJyFFRBnZDm2IlBHg',
+      privateKey: 'BR96SEh0k4nw4xd5D2kmp',
+    });
 
     window.sendMessage = function () {
       const name    = document.getElementById('formName').value.trim();
@@ -428,7 +426,7 @@
       sendBtn.textContent = 'Sending…';
       sendBtn.disabled = true;
 
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      emailjs.send('service_nmew72a', 'template_iw9op08', {
         name:    name,
         email:   email,
         message: message,
