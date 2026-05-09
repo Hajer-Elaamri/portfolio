@@ -4,6 +4,9 @@
 <head>
   <title>Hajer's Portfolio</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/wUXyfJ5.png">
+
   <style>
     body {
       margin: 0;
@@ -52,6 +55,24 @@
       background: rgba(255,255,255,0.35);
     }
 
+    /* Visitor Counter */
+    .visitor-counter {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
+
+    .visitor-counter span {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
     .nav {
       background: rgba(233, 30, 140, 0.8);
       padding: 15px;
@@ -76,6 +97,16 @@
       border-radius: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       transition: background 0.3s, box-shadow 0.3s;
+
+      /* Scroll Animation — hidden at start */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, box-shadow 0.3s;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
@@ -193,13 +224,8 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
-    body.dark h3 {
-      color: #f0f0f0;
-    }
-
-    body.dark p {
-      color: #cccccc;
-    }
+    body.dark h3 { color: #f0f0f0; }
+    body.dark p { color: #cccccc; }
 
     body.dark .project,
     body.dark .certificate,
@@ -214,17 +240,9 @@
       color: #f48fbf;
     }
 
-    body.dark .contact-box a {
-      color: #f48fbf;
-    }
-
-    body.dark footer {
-      background: #0a0a0a;
-    }
-
-    body.dark .certificate img {
-      border-color: #444;
-    }
+    body.dark .contact-box a { color: #f48fbf; }
+    body.dark footer { background: #0a0a0a; }
+    body.dark .certificate img { border-color: #444; }
 
     @media (max-width: 600px) {
       h1 { font-size: 40px; }
@@ -232,6 +250,7 @@
       header img { width: 130px; height: 130px; }
       .skills-grid { grid-template-columns: 1fr; }
       .back-btn { float: none; display: flex; width: fit-content; margin: 0 auto 15px; }
+      .visitor-counter { display: block; margin: 5px auto; width: fit-content; }
     }
   </style>
 </head>
@@ -241,7 +260,9 @@
   <header id="top">
     <img src="https://i.imgur.com/wUXyfJ5.png">
     <h1>Hajer's Portfolio</h1>
+    <br>
     <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙 Dark Mode</button>
+    <div class="visitor-counter">👁️ Visitors: <span id="visitorCount">0</span></div>
     <div class="nav">
       <a href="#about">About Me</a>
       <a href="#skills">Skills</a>
@@ -399,6 +420,7 @@
   </footer>
 
   <script>
+    // ===== DARK MODE =====
     function toggleDark() {
       document.body.classList.toggle('dark');
       const btn = document.getElementById('darkToggle');
@@ -411,11 +433,48 @@
       }
     }
 
-    // Remember user's choice when they come back
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark');
       document.getElementById('darkToggle').textContent = '☀️ Light Mode';
     }
+
+    // ===== VISITOR COUNTER =====
+    let count = parseInt(localStorage.getItem('visitorCount') || '0');
+    if (!sessionStorage.getItem('visited')) {
+      count++;
+      localStorage.setItem('visitorCount', count);
+      sessionStorage.setItem('visited', 'yes');
+    }
+
+    // Animate the number counting up
+    const display = document.getElementById('visitorCount');
+    let current = 0;
+    const duration = 1500;
+    const steps = 40;
+    const increment = count / steps;
+    const interval = duration / steps;
+
+    const counter = setInterval(() => {
+      current += increment;
+      if (current >= count) {
+        current = count;
+        clearInterval(counter);
+      }
+      display.textContent = Math.floor(current);
+    }, interval);
+
+    // ===== SCROLL ANIMATIONS =====
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => observer.observe(section));
   </script>
 
 </body>
