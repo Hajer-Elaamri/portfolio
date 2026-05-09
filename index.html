@@ -110,10 +110,7 @@
       margin-bottom: 10px;
     }
 
-    h3 {
-      color: #333;
-      transition: color 0.3s;
-    }
+    h3 { color: #333; transition: color 0.3s; }
 
     p {
       font-size: 18px;
@@ -396,6 +393,52 @@
     <p>© 2026 Hajer Elaamri | Cybersecurity Portfolio</p>
   </footer>
 
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
+      authDomain: "hajer-portfolio.firebaseapp.com",
+      databaseURL: "https://hajer-portfolio-default-rtdb.firebaseio.com",
+      projectId: "hajer-portfolio",
+      storageBucket: "hajer-portfolio.firebasestorage.app",
+      messagingSenderId: "278779232357",
+      appId: "1:278779232357:web:4b027130c4c328c0b1c68c",
+      measurementId: "G-P2E4QHJKEV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const counterRef = ref(db, 'visitorCount');
+
+    // Only count once per session
+    if (!sessionStorage.getItem('counted')) {
+      sessionStorage.setItem('counted', 'yes');
+      runTransaction(counterRef, (current) => (current || 0) + 1);
+    }
+
+    // Show the live count
+    onValue(counterRef, (snapshot) => {
+      const count = snapshot.val() || 0;
+      const display = document.getElementById('visitorCount');
+      let current = 0;
+      const steps = 40;
+      const increment = count / steps;
+      const interval = 1500 / steps;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= count) {
+          current = count;
+          clearInterval(timer);
+        }
+        display.textContent = Math.floor(current);
+      }, interval);
+    });
+  </script>
+
   <script>
     // ===== DARK MODE =====
     function toggleDark() {
@@ -415,38 +458,11 @@
       document.getElementById('darkToggle').textContent = '☀️ Light Mode';
     }
 
-    // ===== VISITOR COUNTER — CountAPI (real server, works across all devices) =====
-   fetch('https://api.counterapi.dev/v1/hajer-portfolio-2026/visitors/up')
-      .then(res => res.json())
-      .then(data => {
-        const count = data.value;
-        const display = document.getElementById('visitorCount');
-        let current = 0;
-        const steps = 40;
-        const increment = count / steps;
-        const interval = 1500 / steps;
-
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= count) {
-            current = count;
-            clearInterval(timer);
-          }
-          display.textContent = Math.floor(current);
-        }, interval);
-      })
-      .catch(() => {
-        document.getElementById('visitorCount').textContent = '—';
-      });
-
     // ===== SCROLL ANIMATIONS =====
     const sections = document.querySelectorAll('section');
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
 
