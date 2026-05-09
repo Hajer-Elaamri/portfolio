@@ -414,10 +414,10 @@
     const counterRef = ref(db, 'visitorCount');
 
     // Only count once per session
-    if (!sessionStorage.getItem('counted')) {
-      sessionStorage.setItem('counted', 'yes');
-      runTransaction(counterRef, (current) => (current || 0) + 1);
-    }
+   if (!localStorage.getItem('counted')) {
+  localStorage.setItem('counted', 'yes');
+  runTransaction(counterRef, (current) => (current || 0) + 1);
+}
 
     // Show the live count
     onValue(counterRef, (snapshot) => {
