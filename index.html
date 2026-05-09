@@ -49,9 +49,7 @@
       font-weight: bold;
     }
 
-    .nav a:hover {
-      text-decoration: underline;
-    }
+    .nav a:hover { text-decoration: underline; }
 
     section {
       background: white;
@@ -66,6 +64,7 @@
       color: #e91e8c;
       font-size: 40px;
       text-align: center;
+      margin-bottom: 10px;
     }
 
     h3 { color: #333; }
@@ -135,18 +134,42 @@
       margin-top: 40px;
     }
 
+    .section-header {
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e91e8c;
+      color: white;
+      text-decoration: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: bold;
+      float: right;
+      margin-top: -10px;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: #c2185b; }
+
     @media (max-width: 600px) {
       h1 { font-size: 40px; }
       .nav a { display: block; margin: 10px; }
       header img { width: 130px; height: 130px; }
       .skills-grid { grid-template-columns: 1fr; }
+      .back-btn { float: none; display: flex; width: fit-content; margin: 0 auto 15px; }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
+  <header id="top">
     <img src="https://i.imgur.com/wUXyfJ5.png">
     <h1>Hajer's Portfolio</h1>
     <div class="nav">
@@ -159,14 +182,20 @@
   </header>
 
   <section id="about">
-    <h2>About Me</h2>
+    <div class="section-header">
+      <h2>About Me</h2>
+      <a href="#top" class="back-btn">↑ Back to menu</a>
+    </div>
     <p>Hi! I'm <strong>Hajer Elaamri</strong>, a Cybersecurity student at Bahrain Polytechnic with hands-on experience in network security, threat analysis, and ethical hacking.</p>
     <p>I work with tools like <strong>Wireshark</strong> and <strong>Cisco Packet Tracer</strong>, and I've participated in the <strong>Green Youth Hackathon 2025</strong>, where my team built Blue Limit — a smart marine safety device.</p>
     <p>I'm passionate about building secure, user-friendly digital experiences — combining my cybersecurity knowledge with my growing skills in web development to create projects that make a real impact.</p>
   </section>
 
   <section id="skills">
-    <h2>Skills</h2>
+    <div class="section-header">
+      <h2>Skills</h2>
+      <a href="#top" class="back-btn">↑ Back to menu</a>
+    </div>
     <div class="skills-grid">
       <div class="skill-box">
         <h3>🔐 Cybersecurity</h3>
@@ -202,7 +231,10 @@
   </section>
 
   <section id="projects">
-    <h2>My Projects</h2>
+    <div class="section-header">
+      <h2>My Projects</h2>
+      <a href="#top" class="back-btn">↑ Back to menu</a>
+    </div>
 
     <div class="project">
       <h3>Mini SOC Lab</h3>
@@ -221,11 +253,13 @@
       <p>Smart marine monitoring device designed to protect marine life and reduce underwater noise pollution. Built during Green Youth Hackathon 2025.</p>
       <button onclick="window.open('Blue Limit.pdf', '_blank')">View Project</button>
     </div>
-
   </section>
 
   <section id="certificates">
-    <h2>Certificates</h2>
+    <div class="section-header">
+      <h2>Certificates</h2>
+      <a href="#top" class="back-btn">↑ Back to menu</a>
+    </div>
 
     <div class="certificate">
       <h3>CyberSecurity at Home</h3>
@@ -274,11 +308,13 @@
       <p>Participated in Youth to Business innovation and entrepreneurship activities.</p>
       <img src="https://i.imgur.com/Rvmm344.jpeg">
     </div>
-
   </section>
 
   <section id="contact">
-    <h2>Contact Me</h2>
+    <div class="section-header">
+      <h2>Contact Me</h2>
+      <a href="#top" class="back-btn">↑ Back to menu</a>
+    </div>
     <div class="contact-box">
       <p>📧 <a href="mailto:hageralamry828@gmail.com">hageralamry828@gmail.com</a></p>
       <p>📱 +973 36995006</p>
