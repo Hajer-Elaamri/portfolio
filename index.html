@@ -1,122 +1,146 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Hajer's Portfolio</title>
   <link rel="icon" type="image/png" href="https://i.imgur.com/wUXyfJ5.png">
+
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; transition: background 0.3s, color 0.3s; }
 
-    #loader { position: fixed; top:0; left:0; width:100%; height:100%; background:#1a1a2e; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition:opacity 0.6s ease; }
-    #loader h2 { color:#e91e8c; font-size:36px; margin:0 0 10px; letter-spacing:2px; }
-    #loader p { color:white; font-size:16px; margin:0; opacity:0.7; }
-    .loader-bar { width:200px; height:4px; background:rgba(255,255,255,0.2); border-radius:10px; margin-top:20px; overflow:hidden; }
-    .loader-fill { height:100%; width:0%; background:#e91e8c; border-radius:10px; animation:loadfill 2s ease forwards; }
-    @keyframes loadfill { to { width:100%; } }
-    #loader.hide { opacity:0; pointer-events:none; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f5f5;
+      transition: background 0.3s, color 0.3s;
+    }
 
-    #progressBar { position:fixed; top:0; left:0; height:4px; width:0%; background:#e91e8c; z-index:9998; transition:width 0.1s; }
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
 
-    header { text-align:center; background:url("https://i.imgur.com/jr3lys7.jpeg"); background-size:cover; background-position:center; color:white; padding-top:30px; padding-bottom:20px; }
-    header img { margin-top:30px; width:170px; height:170px; border-radius:50%; border:4px solid white; object-fit:cover; }
-    h1 { font-size:65px; margin:15px 0 5px; }
-    .typing-container { font-size:22px; color:#fce4f3; margin:0 0 15px; min-height:30px; }
-    .typing-text { border-right:2px solid #e91e8c; padding-right:4px; animation:blink 0.7s step-end infinite; }
-    @keyframes blink { 50% { border-color:transparent; } }
+    #loader h2 { color: #e91e8c; font-size: 36px; margin: 0 0 10px; letter-spacing: 2px; }
+    #loader p { color: white; font-size: 16px; margin: 0; opacity: 0.7; }
 
-    .dark-toggle { background:rgba(255,255,255,0.2); border:2px solid white; color:white; padding:8px 20px; border-radius:30px; font-size:15px; cursor:pointer; margin-bottom:10px; transition:background 0.2s; }
-    .dark-toggle:hover { background:rgba(255,255,255,0.35); }
-    .visitor-counter { display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.4); color:white; padding:8px 22px; border-radius:30px; font-size:14px; margin-bottom:10px; margin-left:10px; }
-    .visitor-counter span { font-weight:bold; font-size:16px; }
+    .loader-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 20px; overflow: hidden; }
+    .loader-fill { height: 100%; width: 0%; background: #e91e8c; border-radius: 10px; animation: loadfill 2s ease forwards; }
+    @keyframes loadfill { to { width: 100%; } }
+    #loader.hide { opacity: 0; pointer-events: none; }
 
-    .nav { background:rgba(233,30,140,0.8); padding:15px; margin-top:25px; }
-    .nav a { color:white; text-decoration:none; margin:0 15px; font-size:18px; font-weight:bold; }
-    .nav a:hover { text-decoration:underline; }
+    #progressBar { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: #e91e8c; z-index: 9998; transition: width 0.1s; }
 
-    section { background:white; max-width:900px; margin:40px auto; padding:30px; border-radius:20px; box-shadow:0 0 10px rgba(0,0,0,0.1); opacity:0; transform:translateY(40px); transition:opacity 0.6s ease, transform 0.6s ease, background 0.3s, box-shadow 0.3s; }
-    section.visible { opacity:1; transform:translateY(0); }
+    header {
+      text-align: center;
+      background: url("https://i.imgur.com/jr3lys7.jpeg");
+      background-size: cover; background-position: center;
+      color: white; padding-top: 30px; padding-bottom: 20px;
+    }
 
-    h2 { color:#e91e8c; font-size:40px; text-align:center; margin-bottom:10px; }
-    h3 { color:#333; transition:color 0.3s; }
-    p { font-size:18px; line-height:1.7; transition:color 0.3s; }
+    header img { margin-top: 30px; width: 170px; height: 170px; border-radius: 50%; border: 4px solid white; object-fit: cover; }
+    h1 { font-size: 65px; margin: 15px 0 5px; }
 
-    .project, .certificate, .skill-box, .contact-box { margin-top:30px; padding:20px; background:#fafafa; border-radius:15px; border-left:6px solid #e91e8c; transition:background 0.3s; }
-    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-top:20px; }
-    .skill-box { margin-top:0; }
-    .skill-box h3 { margin-top:0; }
-    .skill-tag { display:inline-block; background:#fce4f3; color:#e91e8c; padding:5px 12px; border-radius:20px; font-size:14px; margin:4px 3px; transition:background 0.3s, color 0.3s; }
+    .typing-container { font-size: 22px; color: #fce4f3; margin: 0 0 15px; min-height: 30px; }
+    .typing-text { border-right: 2px solid #e91e8c; padding-right: 4px; animation: blink 0.7s step-end infinite; }
+    @keyframes blink { 50% { border-color: transparent; } }
 
-    button { background:#e91e8c; color:white; border:none; padding:10px 25px; border-radius:30px; font-size:16px; cursor:pointer; margin-top:10px; }
-    button:hover { background:#c2185b; }
+    .dark-toggle { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 8px 20px; border-radius: 30px; font-size: 15px; cursor: pointer; margin-bottom: 10px; transition: background 0.2s; }
+    .dark-toggle:hover { background: rgba(255,255,255,0.35); }
 
-    .certificate img { width:100%; max-width:500px; border-radius:10px; margin-top:15px; border:2px solid #ddd; }
-    .contact-box p { margin:8px 0; font-size:17px; }
-    .contact-box a { color:#e91e8c; text-decoration:none; font-weight:bold; }
+    .visitor-counter { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 8px 22px; border-radius: 30px; font-size: 14px; margin-bottom: 10px; margin-left: 10px; }
+    .visitor-counter span { font-weight: bold; font-size: 16px; }
 
-    .contact-form { margin-top:30px; display:flex; flex-direction:column; gap:15px; }
-    .contact-form input, .contact-form textarea { width:100%; padding:12px 18px; border:2px solid #f0c0dc; border-radius:12px; font-size:16px; font-family:Arial,sans-serif; outline:none; transition:border 0.2s, background 0.3s, color 0.3s; background:white; color:#333; }
-    .contact-form input:focus, .contact-form textarea:focus { border-color:#e91e8c; }
-    .contact-form textarea { height:140px; resize:vertical; }
-    .form-success { display:none; background:#e8f5e9; color:#2e7d32; padding:14px 20px; border-radius:12px; font-size:16px; text-align:center; margin-top:10px; }
+    .nav { background: rgba(233, 30, 140, 0.8); padding: 15px; margin-top: 25px; }
+    .nav a { color: white; text-decoration: none; margin: 0 15px; font-size: 18px; font-weight: bold; }
+    .nav a:hover { text-decoration: underline; }
 
-    footer { text-align:center; padding:30px; background:#222; color:white; margin-top:40px; transition:background 0.3s; }
-    .section-header { overflow:hidden; margin-bottom:10px; }
-    .back-btn { display:inline-flex; align-items:center; gap:6px; background:#e91e8c; color:white; text-decoration:none; padding:8px 20px; border-radius:30px; font-size:14px; font-weight:bold; float:right; margin-top:-10px; transition:background 0.2s; }
-    .back-btn:hover { background:#c2185b; }
+    section { background: white; max-width: 900px; margin: 40px auto; padding: 30px; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, box-shadow 0.3s; }
+    section.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== GAME SECTION ===== */
-    .game-intro { text-align:center; margin-bottom:25px; }
-    .game-intro p { font-size:16px; color:#666; }
-    .game-start-btn { background:linear-gradient(135deg, #1a1a2e, #e91e8c); color:white; border:none; padding:14px 35px; border-radius:30px; font-size:18px; cursor:pointer; margin-top:10px; font-weight:bold; letter-spacing:1px; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 4px 15px rgba(233,30,140,0.4); }
-    .game-start-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(233,30,140,0.5); background:linear-gradient(135deg, #1a1a2e, #c2185b); }
-    #gameContainer { display:none; margin-top:20px; }
+    h2 { color: #e91e8c; font-size: 40px; text-align: center; margin-bottom: 10px; }
+    h3 { color: #333; transition: color 0.3s; }
+    p { font-size: 18px; line-height: 1.7; transition: color 0.3s; }
 
-    /* Terminal styles */
-    .term-wrap { font-family:'Courier New', monospace; }
-    .tab-bar { display:flex; gap:4px; margin-bottom:0; }
-    .tab { padding:8px 16px; font-size:12px; cursor:pointer; border-radius:8px 8px 0 0; border:1px solid #333; border-bottom:none; background:#1a1a1a; color:#555; font-family:'Courier New',monospace; transition:all 0.2s; }
-    .tab.active { background:#0d0d0d; color:#00ff41; }
-    .tab.unlocked { color:#ffcc00; cursor:pointer; }
-    .tab.locked { color:#333; cursor:not-allowed; }
-    .terminal { background:#0d0d0d; border-radius:0 8px 8px 8px; border:1.5px solid #333; overflow:hidden; display:none; }
-    .terminal.active { display:block; }
-    .title-bar { background:#1a1a1a; padding:10px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid #333; }
-    .dot { width:12px; height:12px; border-radius:50%; }
-    .dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
-    .tlabel { color:#888; font-size:12px; margin-left:8px; }
-    .score-bar { display:flex; justify-content:space-between; padding:8px 16px; background:#111; border-bottom:1px solid #222; font-size:12px; font-family:'Courier New',monospace; }
-    .screen { padding:16px; min-height:300px; max-height:360px; overflow-y:auto; font-size:13px; line-height:1.7; font-family:'Courier New',monospace; }
-    .input-row { display:flex; align-items:center; padding:10px 16px; border-top:1px solid #222; background:#0d0d0d; gap:8px; }
-    .g-prompt { font-size:13px; white-space:nowrap; font-family:'Courier New',monospace; }
-    .g-input { background:transparent; border:none; outline:none; font-family:'Courier New',monospace; font-size:13px; flex:1; }
-    .lg { color:#00ff41; } .lr { color:#ff4444; } .ly { color:#ffcc00; } .lc { color:#00ffff; } .lw { color:#cccccc; } .ld { color:#555; }
-    .t2color { color:#00cfff; }
+    .project, .certificate, .skill-box, .contact-box { margin-top: 30px; padding: 20px; background: #fafafa; border-radius: 15px; border-left: 6px solid #e91e8c; transition: background 0.3s; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+    .skill-box { margin-top: 0; }
+    .skill-box h3 { margin-top: 0; }
+
+    .skill-tag { display: inline-block; background: #fce4f3; color: #e91e8c; padding: 5px 12px; border-radius: 20px; font-size: 14px; margin: 4px 3px; transition: background 0.3s, color 0.3s; }
+
+    button { background: #e91e8c; color: white; border: none; padding: 10px 25px; border-radius: 30px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #c2185b; }
+
+    .certificate img { width: 100%; max-width: 500px; border-radius: 10px; margin-top: 15px; border: 2px solid #ddd; }
+    .contact-box p { margin: 8px 0; font-size: 17px; }
+    .contact-box a { color: #e91e8c; text-decoration: none; font-weight: bold; }
+
+    .contact-form { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
+    .contact-form input, .contact-form textarea { width: 100%; padding: 12px 18px; border: 2px solid #f0c0dc; border-radius: 12px; font-size: 16px; font-family: Arial, sans-serif; outline: none; transition: border 0.2s, background 0.3s, color 0.3s; background: white; color: #333; }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: #e91e8c; }
+    .contact-form textarea { height: 140px; resize: vertical; }
+
+    .form-success { display: none; background: #e8f5e9; color: #2e7d32; padding: 14px 20px; border-radius: 12px; font-size: 16px; text-align: center; margin-top: 10px; }
+
+    footer { text-align: center; padding: 30px; background: #222; color: white; margin-top: 40px; transition: background 0.3s; }
+    .section-header { overflow: hidden; margin-bottom: 10px; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; background: #e91e8c; color: white; text-decoration: none; padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: bold; float: right; margin-top: -10px; transition: background 0.2s; }
+    .back-btn:hover { background: #c2185b; }
+
+    /* ===== GAME STYLES ===== */
+    .game-wrap { font-family: 'Courier New', monospace; margin-top: 20px; }
+    .tab-bar { display: flex; gap: 4px; margin-bottom: 0; }
+    .tab { padding: 8px 16px; font-size: 12px; cursor: pointer; border-radius: 8px 8px 0 0; border: 1px solid #333; border-bottom: none; background: #1a1a1a; color: #555; font-family: 'Courier New', monospace; transition: all 0.2s; }
+    .tab.active { background: #0d0d0d; color: #00ff41; }
+    .tab.locked { color: #333; cursor: not-allowed; }
+    .game-terminal { background: #0d0d0d; border-radius: 0 8px 8px 8px; border: 1.5px solid #333; overflow: hidden; display: none; }
+    .game-terminal.active { display: block; }
+    .t-titlebar { background: #1a1a1a; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333; }
+    .tdot { width: 12px; height: 12px; border-radius: 50%; }
+    .tdot-r { background: #ff5f57; } .tdot-y { background: #febc2e; } .tdot-g { background: #28c840; }
+    .tlabel { color: #888; font-size: 12px; margin-left: 8px; }
+    .t-scorebar { display: flex; justify-content: space-between; padding: 8px 16px; background: #111; border-bottom: 1px solid #222; font-size: 12px; }
+    .t-screen { padding: 16px; min-height: 300px; max-height: 360px; overflow-y: auto; font-size: 13px; line-height: 1.7; }
+    .t-inputrow { display: flex; align-items: center; padding: 10px 16px; border-top: 1px solid #222; background: #0d0d0d; gap: 8px; }
+    .t-prompt { font-size: 13px; white-space: nowrap; }
+    .t-cmd { background: transparent; border: none; outline: none; font-family: 'Courier New', monospace; font-size: 13px; flex: 1; }
+    .lg { color: #00ff41; } .lr { color: #ff4444; } .ly { color: #ffcc00; }
+    .lc { color: #00ffff; } .lw { color: #cccccc; } .ld { color: #555; }
+    .lb { color: #00cfff; }
 
     /* DARK MODE */
-    body.dark { background:#121212; color:#f0f0f0; }
-    body.dark section { background:#1e1e1e; box-shadow:0 0 10px rgba(0,0,0,0.5); }
-    body.dark h3 { color:#f0f0f0; }
-    body.dark p { color:#cccccc; }
-    body.dark .project, body.dark .certificate, body.dark .skill-box, body.dark .contact-box { background:#2a2a2a; border-left-color:#e91e8c; }
-    body.dark .skill-tag { background:#3a1a2e; color:#f48fbf; }
-    body.dark .contact-box a { color:#f48fbf; }
-    body.dark footer { background:#0a0a0a; }
-    body.dark .certificate img { border-color:#444; }
-    body.dark .contact-form input, body.dark .contact-form textarea { background:#2a2a2a; color:#f0f0f0; border-color:#555; }
-    body.dark .form-success { background:#1b3a1f; color:#81c784; }
-    body.dark .game-intro p { color:#aaa; }
+    body.dark { background: #121212; color: #f0f0f0; }
+    body.dark section { background: #1e1e1e; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    body.dark h3 { color: #f0f0f0; }
+    body.dark p { color: #cccccc; }
+    body.dark .project, body.dark .certificate, body.dark .skill-box, body.dark .contact-box { background: #2a2a2a; border-left-color: #e91e8c; }
+    body.dark .skill-tag { background: #3a1a2e; color: #f48fbf; }
+    body.dark .contact-box a { color: #f48fbf; }
+    body.dark footer { background: #0a0a0a; }
+    body.dark .certificate img { border-color: #444; }
+    body.dark .contact-form input, body.dark .contact-form textarea { background: #2a2a2a; color: #f0f0f0; border-color: #555; }
+    body.dark .form-success { background: #1b3a1f; color: #81c784; }
 
-    @media (max-width:600px) {
-      h1 { font-size:40px; }
-      .nav a { display:block; margin:8px; font-size:15px; }
-      header img { width:130px; height:130px; }
-      .skills-grid { grid-template-columns:1fr; }
-      .back-btn { float:none; display:flex; width:fit-content; margin:0 auto 15px; }
-      .visitor-counter { display:block; margin:5px auto; width:fit-content; }
-      .tab { font-size:10px; padding:6px 10px; }
+    @media (max-width: 600px) {
+      h1 { font-size: 40px; }
+      .nav a { display: block; margin: 10px; }
+      header img { width: 130px; height: 130px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .back-btn { float: none; display: flex; width: fit-content; margin: 0 auto 15px; }
+      .visitor-counter { display: block; margin: 5px auto; width: fit-content; }
+      .tab { font-size: 10px; padding: 6px 8px; }
     }
   </style>
 </head>
+
 <body>
 
   <div id="loader">
@@ -136,14 +160,13 @@
     <div class="nav">
       <a href="#about">About Me</a>
       <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
+      <a href="#projects">My Projects</a>
       <a href="#certificates">Certificates</a>
       <a href="#game">🎮 Hacking Game</a>
       <a href="#contact">Contact</a>
     </div>
   </header>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-header">
       <h2>About Me</h2>
@@ -154,7 +177,6 @@
     <p>I'm passionate about building secure, user-friendly digital experiences — combining my cybersecurity knowledge with my growing skills in web development to create projects that make a real impact.</p>
   </section>
 
-  <!-- SKILLS -->
   <section id="skills">
     <div class="section-header">
       <h2>Skills</h2>
@@ -163,24 +185,37 @@
     <div class="skills-grid">
       <div class="skill-box">
         <h3>🔐 Cybersecurity</h3>
-        <span class="skill-tag">Network Security</span><span class="skill-tag">Threat Analysis</span><span class="skill-tag">Ethical Hacking</span><span class="skill-tag">OSI Model</span><span class="skill-tag">TCP/IP</span><span class="skill-tag">DNS</span><span class="skill-tag">DHCP</span><span class="skill-tag">VLAN</span><span class="skill-tag">NAT</span>
+        <span class="skill-tag">Network Security</span>
+        <span class="skill-tag">Threat Analysis</span>
+        <span class="skill-tag">Ethical Hacking</span>
+        <span class="skill-tag">OSI Model</span>
+        <span class="skill-tag">TCP/IP</span>
+        <span class="skill-tag">DNS</span>
+        <span class="skill-tag">DHCP</span>
+        <span class="skill-tag">VLAN</span>
+        <span class="skill-tag">NAT</span>
       </div>
       <div class="skill-box">
         <h3>🛠️ Tools</h3>
-        <span class="skill-tag">Wireshark</span><span class="skill-tag">Cisco Packet Tracer</span><span class="skill-tag">Nmap</span><span class="skill-tag">Microsoft Office</span>
+        <span class="skill-tag">Wireshark</span>
+        <span class="skill-tag">Cisco Packet Tracer</span>
+        <span class="skill-tag">Nmap</span>
+        <span class="skill-tag">Microsoft Office</span>
       </div>
       <div class="skill-box">
         <h3>💻 Web Development</h3>
-        <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
       </div>
       <div class="skill-box">
         <h3>🌍 Languages</h3>
-        <span class="skill-tag">Arabic — Native</span><span class="skill-tag">English — Professional</span>
+        <span class="skill-tag">Arabic — Native</span>
+        <span class="skill-tag">English — Professional</span>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-header">
       <h2>My Projects</h2>
@@ -203,75 +238,83 @@
     </div>
   </section>
 
-  <!-- CERTIFICATES -->
   <section id="certificates">
     <div class="section-header">
       <h2>Certificates</h2>
       <a href="#top" class="back-btn">↑ Back to menu</a>
     </div>
-    <div class="certificate"><h3>CyberSecurity at Home</h3><p>Completed cybersecurity awareness and home security training.</p><img src="https://i.imgur.com/PjnYh2v.jpeg"></div>
-    <div class="certificate"><h3>CyberSecurity Leadership and Management</h3><p>Specialized training in cybersecurity leadership and management.</p><img src="https://i.imgur.com/Ax3ekZB.jpeg"></div>
-    <div class="certificate"><h3>Cisco Cybersecurity Essentials</h3><p>Completed cybersecurity fundamentals and network security training.</p><img src="https://i.imgur.com/NcIFlS8.jpeg"></div>
-    <div class="certificate"><h3>Green Youth Hackathon</h3><p>Participation certificate for sustainability and innovation projects.</p><img src="https://i.imgur.com/c04zrWo.jpeg"></div>
-    <div class="certificate"><h3>HCIA Security</h3><p>Completed HCIA-Security course from Huawei ICT Academy.</p><img src="https://i.imgur.com/xqmrYlr.jpeg"></div>
-    <div class="certificate"><h3>Sign Language Training</h3><p>Completed sign language communication training.</p><img src="https://i.imgur.com/OUOq9Us.jpeg"></div>
-    <div class="certificate"><h3>Social Security Program</h3><p>Completed community and social security awareness program.</p><img src="https://i.imgur.com/XmxhU1k.jpeg"></div>
-    <div class="certificate"><h3>Youth to Business</h3><p>Participated in Youth to Business innovation and entrepreneurship activities.</p><img src="https://i.imgur.com/Rvmm344.jpeg"></div>
+    <div class="certificate">
+      <h3>CyberSecurity at Home</h3>
+      <p>Completed cybersecurity awareness and home security training.</p>
+      <img src="https://i.imgur.com/PjnYh2v.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>CyberSecurity Leadership and Management</h3>
+      <p>Specialized training in cybersecurity leadership and management.</p>
+      <img src="https://i.imgur.com/Ax3ekZB.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>Cisco Cybersecurity Essentials</h3>
+      <p>Completed cybersecurity fundamentals and network security training.</p>
+      <img src="https://i.imgur.com/NcIFlS8.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>Green Youth Hackathon</h3>
+      <p>Participation certificate for sustainability and innovation projects.</p>
+      <img src="https://i.imgur.com/c04zrWo.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>HCIA Security</h3>
+      <p>Completed HCIA-Security course from Huawei ICT Academy.</p>
+      <img src="https://i.imgur.com/xqmrYlr.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>Sign Language Training</h3>
+      <p>Completed sign language communication training.</p>
+      <img src="https://i.imgur.com/OUOq9Us.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>Social Security Program</h3>
+      <p>Completed community and social security awareness program.</p>
+      <img src="https://i.imgur.com/XmxhU1k.jpeg">
+    </div>
+    <div class="certificate">
+      <h3>Youth to Business</h3>
+      <p>Participated in Youth to Business innovation and entrepreneurship activities.</p>
+      <img src="https://i.imgur.com/Rvmm344.jpeg">
+    </div>
   </section>
 
-  <!-- HACKING GAME -->
+  <!-- GAME SECTION -->
   <section id="game">
     <div class="section-header">
-      <h2>🎮 Hacking Simulator</h2>
+      <h2>🎮 Hacking Game</h2>
       <a href="#top" class="back-btn">↑ Back to menu</a>
     </div>
-    <div class="game-intro">
-      <p>Think you have what it takes to be a hacker? Complete cybersecurity challenges across 2 terminals!</p>
-      <p>🔓 Finish <strong>Terminal 1 — CTF</strong> to unlock <strong>Terminal 2 — Network Attacks</strong></p>
-      <button class="game-start-btn" onclick="launchGame()">💻 Launch Terminal</button>
-    </div>
+    <p style="text-align:center; color:#888; font-size:16px;">Think you have what it takes? Complete Terminal 1 to unlock the Network Attack lab!</p>
 
-    <div id="gameContainer">
-      <div class="term-wrap">
-        <div class="tab-bar">
-          <div class="tab active" id="tab1" onclick="switchTab(1)">💻 Terminal 1 — CTF</div>
-          <div class="tab locked" id="tab2" onclick="switchTab(2)">🌐 Terminal 2 — Network Attack 🔒</div>
-        </div>
+    <div class="game-wrap">
+      <div class="tab-bar">
+        <div class="tab active" id="tab1" onclick="switchTab(1)">💻 Terminal 1 — CTF Challenges</div>
+        <div class="tab locked" id="tab2">🌐 Terminal 2 — Network Attack 🔒</div>
+      </div>
 
-        <!-- Terminal 1 -->
-        <div class="terminal active" id="term1">
-          <div class="title-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="tlabel">hajer@ctf ~ basic hacking challenges</span></div>
-          <div class="score-bar">
-            <span class="lg">score: <span id="s1">0</span></span>
-            <span class="ly">level: <span id="l1">1</span>/5</span>
-            <span id="h1" style="color:#888">type "start" to begin</span>
-          </div>
-          <div class="screen" id="sc1"></div>
-          <div class="input-row">
-            <span class="g-prompt lg">root@ctf:~$</span>
-            <input class="g-input lg" id="in1" autocomplete="off" spellcheck="false" placeholder="enter command...">
-          </div>
-        </div>
+      <div class="game-terminal active" id="term1">
+        <div class="t-titlebar"><div class="tdot tdot-r"></div><div class="tdot tdot-y"></div><div class="tdot tdot-g"></div><span class="tlabel">hajer@ctf ~ basic hacking challenges</span></div>
+        <div class="t-scorebar"><span style="color:#00ff41">score: <span id="s1">0</span></span><span style="color:#ffcc00">level: <span id="l1">1</span>/5</span><span id="h1" style="color:#555">type "start" to begin</span></div>
+        <div class="t-screen" id="sc1"></div>
+        <div class="t-inputrow"><span class="t-prompt" style="color:#00ff41">root@ctf:~$</span><input class="t-cmd" id="in1" autocomplete="off" spellcheck="false" placeholder="enter command..." style="color:#00ff41; caret-color:#00ff41"></div>
+      </div>
 
-        <!-- Terminal 2 -->
-        <div class="terminal" id="term2">
-          <div class="title-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="tlabel">hajer@netlab ~ network attack simulation</span></div>
-          <div class="score-bar">
-            <span class="t2color">score: <span id="s2">0</span></span>
-            <span class="ly">level: <span id="l2">1</span>/5</span>
-            <span id="h2" style="color:#888">type "start" to begin</span>
-          </div>
-          <div class="screen" id="sc2"></div>
-          <div class="input-row">
-            <span class="g-prompt t2color">root@netlab:~$</span>
-            <input class="g-input t2color" id="in2" autocomplete="off" spellcheck="false" placeholder="enter command...">
-          </div>
-        </div>
+      <div class="game-terminal" id="term2">
+        <div class="t-titlebar"><div class="tdot tdot-r"></div><div class="tdot tdot-y"></div><div class="tdot tdot-g"></div><span class="tlabel">hajer@netlab ~ network attack simulation</span></div>
+        <div class="t-scorebar"><span style="color:#00cfff">score: <span id="s2">0</span></span><span style="color:#ffcc00">level: <span id="l2">1</span>/5</span><span id="h2" style="color:#555">type "start" to begin</span></div>
+        <div class="t-screen" id="sc2"></div>
+        <div class="t-inputrow"><span class="t-prompt" style="color:#00cfff">root@netlab:~$</span><input class="t-cmd" id="in2" autocomplete="off" spellcheck="false" placeholder="enter command..." style="color:#00cfff; caret-color:#00cfff"></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-header">
       <h2>Contact Me</h2>
@@ -285,7 +328,7 @@
       <button onclick="window.open('Hajer_Elaamri_CV (1).pdf', '_blank')">📄 View My CV</button>
     </div>
     <div class="contact-form">
-      <h3 style="margin-bottom:5px;">📩 Send Me a Message</h3>
+      <h3 style="margin-bottom: 5px;">📩 Send Me a Message</h3>
       <input type="text" id="formName" placeholder="Your Name" required>
       <input type="email" id="formEmail" placeholder="Your Email" required>
       <textarea id="formMessage" placeholder="Your Message..."></textarea>
@@ -303,14 +346,14 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase, ref, runTransaction, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
     const firebaseConfig = {
-      apiKey:"AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
-      authDomain:"hajer-portfolio.firebaseapp.com",
-      databaseURL:"https://hajer-portfolio-default-rtdb.firebaseio.com",
-      projectId:"hajer-portfolio",
-      storageBucket:"hajer-portfolio.firebasestorage.app",
-      messagingSenderId:"278779232357",
-      appId:"1:278779232357:web:4b027130c4c328c0b1c68c",
-      measurementId:"G-P2E4QHJKEV"
+      apiKey: "AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
+      authDomain: "hajer-portfolio.firebaseapp.com",
+      databaseURL: "https://hajer-portfolio-default-rtdb.firebaseio.com",
+      projectId: "hajer-portfolio",
+      storageBucket: "hajer-portfolio.firebasestorage.app",
+      messagingSenderId: "278779232357",
+      appId: "1:278779232357:web:4b027130c4c328c0b1c68c",
+      measurementId: "G-P2E4QHJKEV"
     };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
@@ -324,7 +367,9 @@
       const count = snapshot.val() || 0;
       const display = document.getElementById('visitorCount');
       let current = 0;
-      const steps = 40, increment = count / steps, interval = 1500 / steps;
+      const steps = 40;
+      const increment = count / steps;
+      const interval = 1500 / steps;
       const timer = setInterval(() => {
         current += increment;
         if (current >= count) { current = count; clearInterval(timer); }
@@ -343,12 +388,12 @@
         const success = document.getElementById('formSuccess');
         success.style.display = 'block';
         setTimeout(() => success.style.display = 'none', 4000);
-      }).catch(() => alert('Something went wrong. Please try again.'));
+      }).catch(() => { alert('Something went wrong. Please try again.'); });
     };
   </script>
 
   <script>
-    // ===== LOADER =====
+    // ===== LOADING =====
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hide');
@@ -356,7 +401,7 @@
       }, 2200);
     });
 
-    // ===== SCROLL BAR =====
+    // ===== SCROLL =====
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -367,22 +412,22 @@
     function toggleDark() {
       document.body.classList.toggle('dark');
       const btn = document.getElementById('darkToggle');
-      if (document.body.classList.contains('dark')) { btn.textContent = '☀️ Light Mode'; localStorage.setItem('theme','dark'); }
-      else { btn.textContent = '🌙 Dark Mode'; localStorage.setItem('theme','light'); }
+      if (document.body.classList.contains('dark')) { btn.textContent = '☀️ Light Mode'; localStorage.setItem('theme', 'dark'); }
+      else { btn.textContent = '🌙 Dark Mode'; localStorage.setItem('theme', 'light'); }
     }
     if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); document.getElementById('darkToggle').textContent = '☀️ Light Mode'; }
 
     // ===== TYPING =====
-    const titles = ['Cybersecurity Student 🔐','Ethical Hacker 💻','Web Developer 🌐','Network Security Enthusiast 🛡️'];
-    let titleIndex=0, charIndex=0, isDeleting=false;
+    const titles = ['Cybersecurity Student 🔐', 'Ethical Hacker 💻', 'Web Developer 🌐', 'Network Security Enthusiast 🛡️'];
+    let titleIndex = 0, charIndex = 0, isDeleting = false;
     const typingEl = document.getElementById('typingText');
     function type() {
       const current = titles[titleIndex];
-      if (isDeleting) { typingEl.textContent = current.substring(0, charIndex-1); charIndex--; }
-      else { typingEl.textContent = current.substring(0, charIndex+1); charIndex++; }
-      if (!isDeleting && charIndex === current.length) setTimeout(() => isDeleting=true, 1500);
-      else if (isDeleting && charIndex === 0) { isDeleting=false; titleIndex=(titleIndex+1)%titles.length; }
-      setTimeout(type, isDeleting?60:100);
+      if (isDeleting) { typingEl.textContent = current.substring(0, charIndex - 1); charIndex--; }
+      else { typingEl.textContent = current.substring(0, charIndex + 1); charIndex++; }
+      if (!isDeleting && charIndex === current.length) { setTimeout(() => isDeleting = true, 1500); }
+      else if (isDeleting && charIndex === 0) { isDeleting = false; titleIndex = (titleIndex + 1) % titles.length; }
+      setTimeout(type, isDeleting ? 60 : 100);
     }
     setTimeout(type, 2500);
 
@@ -396,224 +441,209 @@
     // ===== GAME =====
     let t1Done = false;
 
-    function launchGame() {
-      document.getElementById('gameContainer').style.display = 'block';
-      document.querySelector('.game-start-btn').style.display = 'none';
-      initGames();
-      document.getElementById('in1').focus();
-    }
-
-    // ===== FIX: switchTab now correctly handles all three states =====
     function switchTab(n) {
-      if (n === 2 && !t1Done) return; // still locked
-      document.getElementById('tab1').className = 'tab' + (n===1 ? ' active' : '');
-      document.getElementById('tab2').className = 'tab' + (n===2 ? ' active' : ' unlocked');
-      document.getElementById('term1').className = 'terminal' + (n===1 ? ' active' : '');
-      document.getElementById('term2').className = 'terminal' + (n===2 ? ' active' : '');
-      setTimeout(() => document.getElementById(n===1 ? 'in1' : 'in2').focus(), 100);
-    }
-
-    function initGames() {
-      makeGame({
-        scId:'sc1', inId:'in1', sId:'s1', lId:'l1', hId:'h1',
-        termId:'term1', promptColor:'lg',
-        title:'HAJER CTF HACKING SIMULATOR',
-        subtitle:'Complete all 5 missions to unlock Terminal 2!',
-        // ===== FIX: onComplete properly unlocks tab2 =====
-        onComplete: () => {
-          t1Done = true;
-          const tab2 = document.getElementById('tab2');
-          tab2.className = 'tab unlocked';       // remove 'locked', add 'unlocked'
-          tab2.style.cursor = 'pointer';          // override the not-allowed cursor
-          tab2.textContent = '🌐 Terminal 2 — Network Attack ✅ UNLOCKED!';
-          setTimeout(() => {
-            const sc = document.getElementById('sc1');
-            const d = document.createElement('div');
-            d.className = 'ly';
-            d.textContent = '>>> Terminal 2 UNLOCKED! Click the tab above! <<<';
-            sc.appendChild(d);
-            sc.scrollTop = sc.scrollHeight;
-          }, 800);
-        },
-        challenges: [
-          {
-            intro:[{t:'lc',m:'[MISSION 1] Password Cracking'},{t:'lw',m:'You found a login page. The password is the most common password in the world.'},{t:'ly',m:'Just type the password to crack it!'}],
-            check: cmd => ['123456','password','123456789'].includes(cmd),
-            hint: 'Think about what most people lazily use... simple numbers in order',
-            success:[{t:'lg',m:'ACCESS GRANTED!'},{t:'lg',m:'"123456" is the worlds most common password. Never use it!'}],
-            points:100,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 2] SQL Injection'},{t:'lw',m:'The login form is vulnerable to SQL injection.'},{t:'lw',m:'Craft a payload that makes the SQL query always return true.'},{t:'ly',m:"Think: how do you make a condition always true in SQL?"}],
-            check: cmd => cmd.includes('or') && (cmd.includes('1=1') || cmd.includes("'1'='1")),
-            hint: 'SQL uses OR to combine conditions. What if you added OR with something always true?',
-            success:[{t:'lg',m:'INJECTION SUCCESSFUL!'},{t:'lg',m:'Always use parameterized queries to prevent SQL injection!'}],
-            points:200,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 3] Decode the Secret'},{t:'lw',m:'You intercepted this encoded message:'},{t:'ly',m:'SGVsbG8gSGFja2Vy'},{t:'lw',m:'Decode it and type the answer!'}],
-            check: cmd => cmd === 'hello hacker',
-            hint: 'It is Base64 encoded. Search "Base64 decode" online and paste the message.',
-            success:[{t:'lg',m:'DECODED! "Hello Hacker"'},{t:'lg',m:'Base64 is encoding, NOT encryption. Never store secrets in Base64!'}],
-            points:300,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 4] Port Scanning'},{t:'lw',m:'What is the default SSH port number?'},{t:'ly',m:'Type the port number!'}],
-            check: cmd => cmd.trim() === '22',
-            hint: 'SSH default port — small two-digit number less than 25',
-            success:[{t:'lg',m:'CORRECT! Port 22 — SSH detected!'},{t:'lg',m:'Flag: CTF{ssh_port_master} — Always close unused ports!'}],
-            points:300,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 5] Phishing Detection'},{t:'lw',m:'You received this email:'},{t:'ly',m:'From: security@paypa1.com'},{t:'lw',m:'"Click here to verify your PayPal account!"'},{t:'lw',m:'Is this phishing? Type: yes or no'}],
-            check: cmd => cmd === 'yes',
-            hint: 'Read the sender email address very carefully — character by character',
-            success:[{t:'lg',m:'CORRECT! paypa1.com uses "1" instead of "l"!'},{t:'lg',m:'Classic homograph phishing attack!'},{t:'lc',m:'Terminal 2 is now unlocking...'}],
-            points:400,
-          },
-        ]
-      });
-
-      makeGame({
-        scId:'sc2', inId:'in2', sId:'s2', lId:'l2', hId:'h2',
-        termId:'term2', promptColor:'t2color',
-        title:'NETWORK ATTACK SIMULATION',
-        subtitle:'Advanced network security challenges!',
-        challenges: [
-          {
-            intro:[{t:'lc',m:'[MISSION 1] Identify the Attack'},{t:'lw',m:'Millions of requests are flooding a web server from one IP.'},{t:'lw',m:'The server is completely unreachable by real users.'},{t:'ly',m:'What type of attack is this? Type the attack name.'}],
-            check: cmd => cmd.includes('dos') || cmd.includes('denial'),
-            hint: 'Think about what happens when a road is completely jammed with cars — what can no longer happen?',
-            success:[{t:'lg',m:'CORRECT! This is a DoS (Denial of Service) attack!'},{t:'lg',m:'Mitigation: rate limiting, firewalls, and traffic filtering.'}],
-            points:150,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 2] The Hidden Listener'},{t:'lw',m:'An attacker is secretly intercepting traffic between a user and a bank.'},{t:'lw',m:'The user sees https:// but the attacker reads all data.'},{t:'ly',m:'What attack is this? Type the abbreviation.'}],
-            check: cmd => cmd.includes('mitm') || cmd.includes('man in the middle') || cmd.includes('man-in-the-middle'),
-            hint: 'The attacker is neither the sender nor the receiver — they secretly sit between both like an eavesdropper on a phone call. Think of 3 letters for each word.',
-            success:[{t:'lg',m:'CORRECT! MITM — Man in the Middle attack!'},{t:'lg',m:'Use end-to-end encryption and verify SSL certificates!'}],
-            points:200,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 3] Find the Rogue Device'},{t:'lw',m:'Someone connected an unauthorized device to your network.'},{t:'lw',m:'Which tool do you use to scan and find all connected devices?'},{t:'ly',m:'Type the tool name.'}],
-            check: cmd => cmd.includes('nmap'),
-            hint: 'This tool is a hacker\'s first step — it knocks on every door in a network to see who answers. Very popular in cybersecurity.',
-            success:[{t:'lg',m:'CORRECT! Nmap is the go-to network scanning tool!'},{t:'lg',m:'nmap -sn 192.168.1.0/24 scans your whole network!'}],
-            points:250,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 4] Firewall Rule'},{t:'lw',m:'Your server is getting attacked on port 23 (Telnet).'},{t:'lw',m:'Telnet sends data in plain text — very dangerous!'},{t:'ly',m:'What should you do? Type: block or allow'}],
-            check: cmd => cmd.includes('block'),
-            hint: 'Telnet sends everything as plain text — like writing a password on a postcard. What would you do with a door that has no lock?',
-            success:[{t:'lg',m:'CORRECT! Block port 23 immediately!'},{t:'lg',m:'Use SSH (port 22) instead — it is encrypted and secure!'}],
-            points:250,
-          },
-          {
-            intro:[{t:'lc',m:'[MISSION 5] The Undiscovered Flaw'},{t:'lw',m:'You discovered an unknown vulnerability in a system.'},{t:'lw',m:'No patch exists yet. You are the first to find it.'},{t:'ly',m:'What type of vulnerability is this? '}],
-            check: cmd => cmd.includes('zero day') || cmd.includes('zero-day') || cmd.includes('0day'),
-            hint: 'This vulnerability has never been seen before and has no patch yet. The name comes from how many days the vendor has had to fix it — none.',
-            success:[{t:'lg',m:'CORRECT! A Zero Day vulnerability!'},{t:'lg',m:'Report it responsibly through bug bounty programs!'},{t:'lc',m:'You completed BOTH terminals! True cybersecurity expert!'}],
-            points:450,
-          },
-        ]
-      });
+      if (n === 2 && !t1Done) return;
+      document.getElementById('tab1').className = 'tab' + (n === 1 ? ' active' : '');
+      document.getElementById('tab2').className = 'tab' + (n === 2 ? ' active' : '');
+      document.getElementById('term1').className = 'game-terminal' + (n === 1 ? ' active' : '');
+      document.getElementById('term2').className = 'game-terminal' + (n === 2 ? ' active' : '');
+      if (n === 1) document.getElementById('in1').focus();
+      if (n === 2) { document.getElementById('in2').focus(); }
     }
 
     function makeGame(cfg) {
-      let score=0, level=1, stage='start', solved=0, hintUsed=false;
-      const sc=document.getElementById(cfg.scId);
-      const inp=document.getElementById(cfg.inId);
-      const sEl=document.getElementById(cfg.sId);
-      const lEl=document.getElementById(cfg.lId);
-      const hEl=document.getElementById(cfg.hId);
+      let score = 0, level = 1, stage = 'start', solved = 0, hintUsed = false;
+      const sc = document.getElementById(cfg.scId);
+      const inp = document.getElementById(cfg.inId);
+      const sEl = document.getElementById(cfg.sId);
+      const lEl = document.getElementById(cfg.lId);
+      const hEl = document.getElementById(cfg.hId);
 
-      function print(text, cls, delay=0) {
+      function print(text, type, delay = 0) {
         setTimeout(() => {
           const d = document.createElement('div');
-          d.className = cls || 'lg';
+          d.className = 'l' + type;
           d.textContent = text;
           sc.appendChild(d);
           sc.scrollTop = sc.scrollHeight;
         }, delay);
       }
-      function lines(arr, base=0) { arr.forEach((l,i) => print(l.m, l.t, base+i*80)); }
-      function blank() { print('','ld'); }
+      function lines(arr, base = 0) { arr.forEach((l, i) => print(l.m, l.t, base + i * 80)); }
+      function blank() { print('', 'd'); }
 
       function start() {
-        sc.innerHTML=''; score=0; level=1; solved=0;
-        sEl.textContent=0; lEl.textContent=1;
-        print('================================','ld');
-        print(' '+cfg.title,'lc');
-        print('================================','ld');
-        print(cfg.subtitle,'lw');
-        print('Commands: hint | skip | restart','ld');
+        sc.innerHTML = '';
+        score = 0; level = 1; solved = 0;
+        sEl.textContent = 0; lEl.textContent = 1;
+        print('================================', 'd');
+        print(' ' + cfg.title, 'c');
+        print('================================', 'd');
+        print(cfg.subtitle, 'w');
+        print('Commands: hint | skip | restart', 'd');
         blank();
-        setTimeout(()=>load(0), 600);
-        stage='playing';
+        setTimeout(() => load(0), 600);
+        stage = 'playing';
       }
 
       function load(idx) {
         if (idx >= cfg.challenges.length) { end(); return; }
-        solved=idx; hintUsed=false;
-        level=idx+1; lEl.textContent=level;
-        hEl.textContent='type "hint" if stuck';
+        solved = idx; hintUsed = false;
+        level = idx + 1; lEl.textContent = level;
+        hEl.textContent = 'type "hint" if stuck';
         lines(cfg.challenges[idx].intro);
         blank();
       }
 
       function end() {
         blank();
-        print('============================','lc');
-        print(' ALL MISSIONS COMPLETE!','lc');
-        print('============================','lc');
-        print('Final Score: '+score,'ly');
-        if (score>=1200) print('Rating: 🏆 Cybersecurity Expert','lg');
-        else if (score>=700) print('Rating: 🔍 Security Analyst','lg');
-        else print('Rating: 🌱 Beginner — keep learning!','ly');
-        print('Type "restart" to play again.','ld');
-        stage='done'; hEl.textContent='complete!';
-        if (cfg.onComplete) cfg.onComplete(score);
+        print('============================', 'c');
+        print(' ALL MISSIONS COMPLETE!', 'c');
+        print('============================', 'c');
+        print('Final Score: ' + score, 'y');
+        if (score >= 1200) print('Rating: Cybersecurity Expert 🏆', 'g');
+        else if (score >= 700) print('Rating: Security Analyst 🔍', 'g');
+        else print('Rating: Beginner — keep learning! 🌱', 'y');
+        print('Type "restart" to play again.', 'd');
+        stage = 'done';
+        hEl.textContent = 'complete!';
+        if (cfg.onComplete) cfg.onComplete();
       }
 
       function handle(raw) {
         const cmd = raw.trim().toLowerCase();
         if (!cmd) return;
-        print((cfg.promptColor==='t2color'?'root@netlab:~$':'root@ctf:~$')+' '+raw,'ld');
-        if (cmd==='restart') { start(); return; }
-        if (cmd==='help') { print('hint | skip | restart','ly'); return; }
-        if (cmd==='hint') {
-          if (stage==='playing' && solved<cfg.challenges.length) {
-            print('HINT: '+cfg.challenges[solved].hint,'ly');
-            hintUsed=true;
-          } return;
+        print(cfg.promptLabel + ' ' + raw, 'd');
+        if (cmd === 'restart') { start(); return; }
+        if (cmd === 'help') { print('hint | skip | restart', 'y'); return; }
+        if (cmd === 'hint') {
+          if (stage === 'playing' && solved < cfg.challenges.length) { print('HINT: ' + cfg.challenges[solved].hint, 'y'); hintUsed = true; }
+          return;
         }
-        if (cmd==='skip') {
-          if (stage==='playing' && solved<cfg.challenges.length) {
-            print('Skipped. No points awarded.','lr'); blank();
-            setTimeout(()=>load(solved+1), 400);
-          } return;
+        if (cmd === 'skip') {
+          if (stage === 'playing' && solved < cfg.challenges.length) { print('Skipped. No points.', 'r'); blank(); setTimeout(() => load(solved + 1), 400); }
+          return;
         }
-        if (stage==='start') { start(); return; }
-        if (stage==='done') { print('Type "restart" to play again.','ld'); return; }
-        if (stage==='playing' && solved<cfg.challenges.length) {
+        if (stage === 'start') { start(); return; }
+        if (stage === 'done') { print('Type "restart" to play again.', 'd'); return; }
+        if (stage === 'playing' && solved < cfg.challenges.length) {
           const ch = cfg.challenges[solved];
           if (ch.check(cmd)) {
-            const pts = hintUsed ? Math.floor(ch.points*0.7) : ch.points;
-            score+=pts; sEl.textContent=score;
+            const pts = hintUsed ? Math.floor(ch.points * 0.7) : ch.points;
+            score += pts; sEl.textContent = score;
             lines(ch.success); blank();
-            print('+'+pts+' points!'+(hintUsed?' (hint penalty)':''),'ly');
+            print('+' + pts + ' points!' + (hintUsed ? ' (hint penalty)' : ''), 'y');
             blank();
-            setTimeout(()=>load(solved+1), 1000);
-          } else { print('Wrong! Try again or type "hint".','lr'); }
+            setTimeout(() => load(solved + 1), 1000);
+          } else { print('Wrong! Try again or type "hint".', 'r'); }
         }
       }
 
-      print('Type "start" to begin...','lc');
-      inp.addEventListener('keydown', e => {
-        if (e.key==='Enter') { const v=inp.value; inp.value=''; handle(v); }
-      });
-      document.getElementById(cfg.termId).addEventListener('click', ()=>inp.focus());
+      print('Type "start" to begin...', 'c');
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') { const v = inp.value; inp.value = ''; handle(v); } });
+      document.getElementById(cfg.termId).addEventListener('click', () => inp.focus());
     }
+
+    makeGame({
+      scId: 'sc1', inId: 'in1', sId: 's1', lId: 'l1', hId: 'h1', termId: 'term1',
+      title: 'HAJER CTF HACKING SIMULATOR',
+      subtitle: 'Complete all 5 missions to unlock Terminal 2!',
+      promptLabel: 'root@ctf:~$',
+      onComplete: () => {
+        t1Done = true;
+        const tab2 = document.getElementById('tab2');
+        tab2.className = 'tab';
+        tab2.textContent = '🌐 Terminal 2 — Network Attack ✅ UNLOCKED!';
+        tab2.onclick = () => switchTab(2);
+        setTimeout(() => {
+          const sc = document.getElementById('sc1');
+          const d = document.createElement('div');
+          d.className = 'ly';
+          d.textContent = '>>> Terminal 2 UNLOCKED! Click the tab above! <<<';
+          sc.appendChild(d); sc.scrollTop = sc.scrollHeight;
+        }, 600);
+      },
+      challenges: [
+        {
+          intro: [{t:'c',m:'[MISSION 1] Password Cracking'},{t:'w',m:'You found a login page. The password is the most common password in the world.'},{t:'y',m:'Just type the password to crack it!'}],
+          check: cmd => ['123456','password','123456789'].includes(cmd),
+          hint: 'Think about what most people lazily use... simple numbers in order',
+          success: [{t:'g',m:'ACCESS GRANTED!'},{t:'g',m:'"123456" is the worlds most common password. Never use it!'}],
+          points: 100,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 2] SQL Injection'},{t:'w',m:'The login form is vulnerable to SQL injection.'},{t:'w',m:'Craft a payload that makes the SQL query always return true.'},{t:'y',m:"Think: how do you make a condition always true in SQL?"}],
+          check: cmd => cmd.includes("or") && (cmd.includes("1=1") || cmd.includes("'1'='1")),
+          hint: "SQL uses OR to combine conditions. What if you added OR with something always true?",
+          success: [{t:'g',m:'INJECTION SUCCESSFUL!'},{t:'g',m:'Always use parameterized queries to prevent SQL injection!'}],
+          points: 200,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 3] Decode the Secret'},{t:'w',m:'You intercepted this encoded message:'},{t:'y',m:'SGVsbG8gSGFja2Vy'},{t:'w',m:'Decode it and type the answer!'}],
+          check: cmd => cmd === 'hello hacker',
+          hint: 'It is Base64 encoded. Search "Base64 decode" online and paste the message.',
+          success: [{t:'g',m:'DECODED! "Hello Hacker"'},{t:'g',m:'Base64 is encoding, NOT encryption. Never store secrets in Base64!'}],
+          points: 300,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 4] Port Scanning'},{t:'w',m:'What is the default SSH port number?'},{t:'y',m:'Type the port number!'}],
+          check: cmd => cmd.trim() === '22',
+          hint: 'SSH default port — small two-digit number less than 25',
+          success: [{t:'g',m:'CORRECT! Port 22 — SSH detected!'},{t:'g',m:'Flag: CTF{ssh_port_master}'}],
+          points: 300,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 5] Phishing Detection'},{t:'w',m:'You received this email:'},{t:'y',m:'From: security@paypa1.com'},{t:'w',m:'"Click here to verify your PayPal account!"'},{t:'w',m:'Is this phishing? Type: yes or no'}],
+          check: cmd => cmd === 'yes',
+          hint: 'Read the sender email address very carefully — character by character',
+          success: [{t:'g',m:'CORRECT! paypa1.com uses "1" instead of "l"!'},{t:'g',m:'Classic homograph phishing attack!'},{t:'c',m:'Terminal 2 unlocking...'}],
+          points: 400,
+        },
+      ]
+    });
+
+    makeGame({
+      scId: 'sc2', inId: 'in2', sId: 's2', lId: 'l2', hId: 'h2', termId: 'term2',
+      title: 'NETWORK ATTACK SIMULATION',
+      subtitle: 'Advanced network security challenges!',
+      promptLabel: 'root@netlab:~$',
+      challenges: [
+        {
+          intro: [{t:'c',m:'[MISSION 1] Identify the Attack'},{t:'w',m:'Millions of requests are flooding a web server from one IP.'},{t:'w',m:'The server is completely unreachable by real users.'},{t:'y',m:'What type of attack is this? Type the attack name.'}],
+          check: cmd => cmd.includes('dos') || cmd.includes('denial'),
+          hint: 'The server is being flooded with traffic to make it unavailable — D_ _ attack',
+          success: [{t:'g',m:'CORRECT! DoS — Denial of Service attack!'},{t:'g',m:'Mitigation: rate limiting, firewalls, and traffic filtering.'}],
+          points: 150,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 2] Man in the Middle'},{t:'w',m:'An attacker secretly intercepts traffic between a user and a bank.'},{t:'w',m:'The user sees https:// but the attacker reads all data.'},{t:'y',m:'What attack is this? Type the abbreviation.'}],
+          check: cmd => cmd.includes('mitm') || cmd.includes('man in the middle') || cmd.includes('man-in-the-middle'),
+          hint: 'The attacker is in the MIDDLE of the communication — M_ _ M',
+          success: [{t:'g',m:'CORRECT! MITM — Man in the Middle attack!'},{t:'g',m:'Use end-to-end encryption and verify SSL certificates!'}],
+          points: 200,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 3] Find the Rogue Device'},{t:'w',m:'Someone connected an unauthorized device to your network.'},{t:'w',m:'Which tool do you use to scan and find all connected devices?'},{t:'y',m:'Type the tool name.'}],
+          check: cmd => cmd.includes('nmap'),
+          hint: 'Famous open-source network scanner starting with N...',
+          success: [{t:'g',m:'CORRECT! Nmap is the go-to network scanning tool!'},{t:'g',m:'nmap -sn 192.168.1.0/24 scans your whole network!'}],
+          points: 250,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 4] Firewall Rule'},{t:'w',m:'Your server is being attacked on port 23 (Telnet).'},{t:'w',m:'Telnet sends data in plain text — very dangerous!'},{t:'y',m:'What should you do? Type: block or allow'}],
+          check: cmd => cmd.includes('block'),
+          hint: 'Telnet is unencrypted and dangerous. You should never allow it.',
+          success: [{t:'g',m:'CORRECT! Block port 23 immediately!'},{t:'g',m:'Use SSH (port 22) instead — it is encrypted!'}],
+          points: 250,
+        },
+        {
+          intro: [{t:'c',m:'[MISSION 5] Zero Day Exploit'},{t:'w',m:'You discovered an unknown vulnerability in a system.'},{t:'w',m:'No patch exists yet. You are the first to find it.'},{t:'y',m:'What type of vulnerability is this? Type: zero day'}],
+          check: cmd => cmd.includes('zero day') || cmd.includes('zero-day') || cmd.includes('0day'),
+          hint: 'It has never been seen before — Z_ _ _  D_ _ exploit',
+          success: [{t:'g',m:'CORRECT! A Zero Day vulnerability!'},{t:'g',m:'Report it responsibly through bug bounty programs!'},{t:'c',m:'You completed BOTH terminals! True cybersecurity expert!'}],
+          points: 450,
+        },
+      ]
+    });
   </script>
 
 </body>
