@@ -509,7 +509,7 @@
             points:250,
           },
           {
-            intro:[{t:'lc',m:'[MISSION 5] Zero Day Exploit'},{t:'lw',m:'You discovered an unknown vulnerability in a system.'},{t:'lw',m:'No patch exists yet. You are the first to find it.'},{t:'ly',m:'What type of vulnerability is this? '}],
+            intro:[{t:'lc',m:'[MISSION 5] The Undiscovered Flaw'},{t:'lw',m:'You discovered an unknown vulnerability in a system.'},{t:'lw',m:'No patch exists yet. You are the first to find it.'},{t:'ly',m:'What type of vulnerability is this? '}],
             check: cmd => cmd.includes('zero day') || cmd.includes('zero-day') || cmd.includes('0day'),
             hint: 'This vulnerability has never been seen before and has no patch yet. The name comes from how many days the vendor has had to fix it — none.',
             success:[{t:'lg',m:'CORRECT! A Zero Day vulnerability!'},{t:'lg',m:'Report it responsibly through bug bounty programs!'},{t:'lc',m:'You completed BOTH terminals! True cybersecurity expert!'}],
