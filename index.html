@@ -71,7 +71,6 @@
     .game-start-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(233,30,140,0.5); background:linear-gradient(135deg, #1a1a2e, #c2185b); }
     #gameContainer { display:none; margin-top:20px; }
 
-    /* Terminal styles */
     .term-wrap { font-family:'Courier New', monospace; }
     .tab-bar { display:flex; gap:4px; margin-bottom:0; }
     .tab { padding:8px 16px; font-size:12px; cursor:pointer; border-radius:8px 8px 0 0; border:1px solid #333; border-bottom:none; background:#1a1a1a; color:#555; font-family:'Courier New',monospace; transition:all 0.2s; }
@@ -92,7 +91,6 @@
     .lg { color:#00ff41; } .lr { color:#ff4444; } .ly { color:#ffcc00; } .lc { color:#00ffff; } .lw { color:#cccccc; } .ld { color:#555; }
     .t2color { color:#00cfff; }
 
-    /* DARK MODE */
     body.dark { background:#121212; color:#f0f0f0; }
     body.dark section { background:#1e1e1e; box-shadow:0 0 10px rgba(0,0,0,0.5); }
     body.dark h3 { color:#f0f0f0; }
@@ -143,7 +141,6 @@
     </div>
   </header>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-header">
       <h2>About Me</h2>
@@ -154,7 +151,6 @@
     <p>I'm passionate about building secure, user-friendly digital experiences — combining my cybersecurity knowledge with my growing skills in web development to create projects that make a real impact.</p>
   </section>
 
-  <!-- SKILLS -->
   <section id="skills">
     <div class="section-header">
       <h2>Skills</h2>
@@ -180,7 +176,6 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-header">
       <h2>My Projects</h2>
@@ -203,7 +198,6 @@
     </div>
   </section>
 
-  <!-- CERTIFICATES -->
   <section id="certificates">
     <div class="section-header">
       <h2>Certificates</h2>
@@ -217,9 +211,9 @@
     <div class="certificate"><h3>Sign Language Training</h3><p>Completed sign language communication training.</p><img src="https://i.imgur.com/OUOq9Us.jpeg"></div>
     <div class="certificate"><h3>Social Security Program</h3><p>Completed community and social security awareness program.</p><img src="https://i.imgur.com/XmxhU1k.jpeg"></div>
     <div class="certificate"><h3>Youth to Business</h3><p>Participated in Youth to Business innovation and entrepreneurship activities.</p><img src="https://i.imgur.com/Rvmm344.jpeg"></div>
+    <div class="certificate"><h3>AI Game Day</h3><p>Participated in the AI Challenge organized by the Information & eGovernment Authority in collaboration with the Royal Academy of Police — November 2025.</p><img src="https://i.imgur.com/zjgEsyW.jpeg"></div>
   </section>
 
-  <!-- HACKING GAME -->
   <section id="game">
     <div class="section-header">
       <h2>🎮 Hacking Simulator</h2>
@@ -237,8 +231,6 @@
           <div class="tab active" id="tab1" onclick="switchTab(1)">💻 Terminal 1 — CTF</div>
           <div class="tab locked" id="tab2" onclick="switchTab(2)">🌐 Terminal 2 — Network Attack 🔒</div>
         </div>
-
-        <!-- Terminal 1 -->
         <div class="terminal active" id="term1">
           <div class="title-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="tlabel">hajer@ctf ~ basic hacking challenges</span></div>
           <div class="score-bar">
@@ -252,8 +244,6 @@
             <input class="g-input lg" id="in1" autocomplete="off" spellcheck="false" placeholder="enter command...">
           </div>
         </div>
-
-        <!-- Terminal 2 -->
         <div class="terminal" id="term2">
           <div class="title-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="tlabel">hajer@netlab ~ network attack simulation</span></div>
           <div class="score-bar">
@@ -271,7 +261,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-header">
       <h2>Contact Me</h2>
@@ -298,7 +287,6 @@
     <p>© 2026 Hajer Elaamri | Cybersecurity Portfolio</p>
   </footer>
 
-  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase, ref, runTransaction, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -348,7 +336,6 @@
   </script>
 
   <script>
-    // ===== LOADER =====
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hide');
@@ -356,14 +343,12 @@
       }, 2200);
     });
 
-    // ===== SCROLL BAR =====
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       document.getElementById('progressBar').style.width = (scrollTop / docHeight * 100) + '%';
     });
 
-    // ===== DARK MODE =====
     function toggleDark() {
       document.body.classList.toggle('dark');
       const btn = document.getElementById('darkToggle');
@@ -372,7 +357,6 @@
     }
     if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); document.getElementById('darkToggle').textContent = '☀️ Light Mode'; }
 
-    // ===== TYPING =====
     const titles = ['Cybersecurity Student 🔐','Ethical Hacker 💻','Web Developer 🌐','Network Security Enthusiast 🛡️'];
     let titleIndex=0, charIndex=0, isDeleting=false;
     const typingEl = document.getElementById('typingText');
@@ -386,14 +370,12 @@
     }
     setTimeout(type, 2500);
 
-    // ===== SCROLL ANIMATIONS =====
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     sections.forEach(section => observer.observe(section));
 
-    // ===== GAME =====
     let t1Done = false;
 
     function launchGame() {
@@ -403,9 +385,8 @@
       document.getElementById('in1').focus();
     }
 
-    // ===== FIX: switchTab now correctly handles all three states =====
     function switchTab(n) {
-      if (n === 2 && !t1Done) return; // still locked
+      if (n === 2 && !t1Done) return;
       document.getElementById('tab1').className = 'tab' + (n===1 ? ' active' : '');
       document.getElementById('tab2').className = 'tab' + (n===2 ? ' active' : ' unlocked');
       document.getElementById('term1').className = 'terminal' + (n===1 ? ' active' : '');
@@ -419,12 +400,11 @@
         termId:'term1', promptColor:'lg',
         title:'HAJER CTF HACKING SIMULATOR',
         subtitle:'Complete all 5 missions to unlock Terminal 2!',
-        // ===== FIX: onComplete properly unlocks tab2 =====
         onComplete: () => {
           t1Done = true;
           const tab2 = document.getElementById('tab2');
-          tab2.className = 'tab unlocked';       // remove 'locked', add 'unlocked'
-          tab2.style.cursor = 'pointer';          // override the not-allowed cursor
+          tab2.className = 'tab unlocked';
+          tab2.style.cursor = 'pointer';
           tab2.textContent = '🌐 Terminal 2 — Network Attack ✅ UNLOCKED!';
           setTimeout(() => {
             const sc = document.getElementById('sc1');
@@ -490,28 +470,28 @@
           {
             intro:[{t:'lc',m:'[MISSION 2] The Hidden Listener'},{t:'lw',m:'An attacker is secretly intercepting traffic between a user and a bank.'},{t:'lw',m:'The user sees https:// but the attacker reads all data.'},{t:'ly',m:'What attack is this? Type the abbreviation.'}],
             check: cmd => cmd.includes('mitm') || cmd.includes('man in the middle') || cmd.includes('man-in-the-middle'),
-            hint: 'The attacker is neither the sender nor the receiver — they secretly sit between both like an eavesdropper on a phone call. Think of 3 letters for each word.',
+            hint: 'The attacker sits secretly between two parties. Think 4 letters.',
             success:[{t:'lg',m:'CORRECT! MITM — Man in the Middle attack!'},{t:'lg',m:'Use end-to-end encryption and verify SSL certificates!'}],
             points:200,
           },
           {
             intro:[{t:'lc',m:'[MISSION 3] Find the Rogue Device'},{t:'lw',m:'Someone connected an unauthorized device to your network.'},{t:'lw',m:'Which tool do you use to scan and find all connected devices?'},{t:'ly',m:'Type the tool name.'}],
             check: cmd => cmd.includes('nmap'),
-            hint: 'This tool is a hacker\'s first step — it knocks on every door in a network to see who answers. Very popular in cybersecurity.',
+            hint: 'This tool knocks on every door in a network to see who answers. Very popular in cybersecurity.',
             success:[{t:'lg',m:'CORRECT! Nmap is the go-to network scanning tool!'},{t:'lg',m:'nmap -sn 192.168.1.0/24 scans your whole network!'}],
             points:250,
           },
           {
             intro:[{t:'lc',m:'[MISSION 4] Firewall Rule'},{t:'lw',m:'Your server is getting attacked on port 23 (Telnet).'},{t:'lw',m:'Telnet sends data in plain text — very dangerous!'},{t:'ly',m:'What should you do? Type: block or allow'}],
             check: cmd => cmd.includes('block'),
-            hint: 'Telnet sends everything as plain text — like writing a password on a postcard. What would you do with a door that has no lock?',
+            hint: 'Telnet sends everything as plain text — like writing a password on a postcard.',
             success:[{t:'lg',m:'CORRECT! Block port 23 immediately!'},{t:'lg',m:'Use SSH (port 22) instead — it is encrypted and secure!'}],
             points:250,
           },
           {
-            intro:[{t:'lc',m:'[MISSION 5] The Undiscovered Flaw'},{t:'lw',m:'You discovered an unknown vulnerability in a system.'},{t:'lw',m:'No patch exists yet. You are the first to find it.'},{t:'ly',m:'What type of vulnerability is this? '}],
+            intro:[{t:'lc',m:'[MISSION 5] The Undiscovered Flaw'},{t:'lw',m:'You discovered an unknown vulnerability in a system.'},{t:'lw',m:'No patch exists yet. You are the first to find it.'},{t:'ly',m:'What type of vulnerability is this?'}],
             check: cmd => cmd.includes('zero day') || cmd.includes('zero-day') || cmd.includes('0day'),
-            hint: 'This vulnerability has never been seen before and has no patch yet. The name comes from how many days the vendor has had to fix it — none.',
+            hint: 'This vulnerability has no patch yet. The name comes from how many days the vendor has had to fix it — none.',
             success:[{t:'lg',m:'CORRECT! A Zero Day vulnerability!'},{t:'lg',m:'Report it responsibly through bug bounty programs!'},{t:'lc',m:'You completed BOTH terminals! True cybersecurity expert!'}],
             points:450,
           },
