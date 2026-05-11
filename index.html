@@ -71,6 +71,47 @@
     .game-start-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(233,30,140,0.5); background:linear-gradient(135deg, #1a1a2e, #c2185b); }
     #gameContainer { display:none; margin-top:20px; }
 
+    /* ===== NICKNAME MODAL ===== */
+    #nicknameOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9000; align-items:center; justify-content:center; }
+    #nicknameOverlay.show { display:flex; }
+    #nicknameBox { background:#1a1a2e; border:2px solid #e91e8c; border-radius:20px; padding:40px 30px; text-align:center; max-width:400px; width:90%; }
+    #nicknameBox h3 { color:#e91e8c; font-size:24px; margin:0 0 8px; font-family:'Courier New',monospace; }
+    #nicknameBox p { color:#aaa; font-size:14px; margin:0 0 20px; font-family:'Courier New',monospace; }
+    #nicknameInput { width:100%; padding:12px 18px; border:2px solid #e91e8c; border-radius:10px; font-size:18px; font-family:'Courier New',monospace; background:#0d0d0d; color:#00ff41; outline:none; text-align:center; margin-bottom:15px; }
+    #nicknameInput::placeholder { color:#444; }
+    #nicknameSubmit { background:#e91e8c; color:white; border:none; padding:12px 30px; border-radius:30px; font-size:16px; cursor:pointer; font-weight:bold; transition:background 0.2s; width:100%; }
+    #nicknameSubmit:hover { background:#c2185b; }
+    #nicknameError { color:#ff4444; font-size:13px; font-family:'Courier New',monospace; margin-top:8px; display:none; }
+
+    /* ===== TIMER BAR ===== */
+    #timerBar { display:none; background:#1a1a2e; border:1px solid #333; border-radius:12px; padding:12px 20px; margin-bottom:15px; display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    #timerBar.show { display:flex; }
+    .timer-player { color:#e91e8c; font-family:'Courier New',monospace; font-size:15px; font-weight:bold; }
+    .timer-clock { color:#00ff41; font-family:'Courier New',monospace; font-size:22px; font-weight:bold; letter-spacing:2px; }
+    .timer-status { color:#ffcc00; font-family:'Courier New',monospace; font-size:13px; }
+
+    /* ===== LEADERBOARD ===== */
+    #leaderboardSection { margin-top:30px; }
+    #leaderboardSection h3 { color:#e91e8c; font-family:'Courier New',monospace; font-size:20px; text-align:center; margin-bottom:15px; }
+    .lb-table { width:100%; border-collapse:collapse; font-family:'Courier New',monospace; font-size:14px; }
+    .lb-table th { background:#e91e8c; color:white; padding:10px 12px; text-align:left; }
+    .lb-table td { padding:10px 12px; border-bottom:1px solid #f0c0dc; }
+    .lb-table tr:nth-child(even) { background:#fce4f3; }
+    .lb-table tr.me { background:#fff3e0 !important; border-left:4px solid #ff9800; }
+    .lb-rank-1 td:first-child { color:#FFD700; font-size:18px; }
+    .lb-rank-2 td:first-child { color:#C0C0C0; font-size:16px; }
+    .lb-rank-3 td:first-child { color:#CD7F32; font-size:16px; }
+    .lb-loading { text-align:center; color:#aaa; padding:20px; font-family:'Courier New',monospace; }
+    .lb-refresh-btn { background:#1a1a2e; color:#00ff41; border:1px solid #333; padding:8px 20px; border-radius:20px; font-size:13px; cursor:pointer; font-family:'Courier New',monospace; margin-top:10px; display:block; margin-left:auto; margin-right:auto; }
+    .lb-refresh-btn:hover { background:#2a2a4e; }
+
+    /* ===== GAME COMPLETION BANNER ===== */
+    #completionBanner { display:none; background:linear-gradient(135deg,#1a1a2e,#2d1a4e); border:2px solid #e91e8c; border-radius:15px; padding:25px; text-align:center; margin-top:20px; }
+    #completionBanner h3 { color:#e91e8c; font-family:'Courier New',monospace; font-size:22px; margin:0 0 10px; }
+    #completionBanner .final-time { color:#00ff41; font-family:'Courier New',monospace; font-size:36px; font-weight:bold; margin:10px 0; }
+    #completionBanner .final-rank { color:#ffcc00; font-family:'Courier New',monospace; font-size:20px; }
+    #completionBanner p { color:#aaa; font-size:14px; font-family:'Courier New',monospace; }
+
     .term-wrap { font-family:'Courier New', monospace; }
     .tab-bar { display:flex; gap:4px; margin-bottom:0; }
     .tab { padding:8px 16px; font-size:12px; cursor:pointer; border-radius:8px 8px 0 0; border:1px solid #333; border-bottom:none; background:#1a1a1a; color:#555; font-family:'Courier New',monospace; transition:all 0.2s; }
@@ -103,6 +144,9 @@
     body.dark .contact-form input, body.dark .contact-form textarea { background:#2a2a2a; color:#f0f0f0; border-color:#555; }
     body.dark .form-success { background:#1b3a1f; color:#81c784; }
     body.dark .game-intro p { color:#aaa; }
+    body.dark .lb-table tr:nth-child(even) { background:#2a1a2e; }
+    body.dark .lb-table td { border-bottom-color:#333; color:#ccc; }
+    body.dark .lb-table tr.me { background:#2a1a00 !important; }
 
     @media (max-width:600px) {
       h1 { font-size:40px; }
@@ -116,6 +160,17 @@
   </style>
 </head>
 <body>
+
+  <!-- Nickname Modal -->
+  <div id="nicknameOverlay">
+    <div id="nicknameBox">
+      <h3>⚡ HACKING SIMULATOR</h3>
+      <p>Enter your hacker nickname to begin.<br>Your time will be tracked on the leaderboard!</p>
+      <input type="text" id="nicknameInput" placeholder="HackerNickname..." maxlength="20" autocomplete="off" spellcheck="false">
+      <button id="nicknameSubmit">🚀 Start Challenge</button>
+      <div id="nicknameError">Please enter a nickname (3-20 characters)!</div>
+    </div>
+  </div>
 
   <div id="loader">
     <h2>Hajer Elaamri</h2>
@@ -222,10 +277,18 @@
     <div class="game-intro">
       <p>Think you have what it takes to be a hacker? Complete cybersecurity challenges across 2 terminals!</p>
       <p>🔓 Finish <strong>Terminal 1 — CTF</strong> to unlock <strong>Terminal 2 — Network Attacks</strong></p>
-      <button class="game-start-btn" onclick="launchGame()">💻 Launch Terminal</button>
+      <p>⏱️ Your <strong>total time</strong> across both terminals is recorded — fastest hacker wins the leaderboard!</p>
+      <button class="game-start-btn" onclick="askNickname()">💻 Launch Terminal</button>
     </div>
 
     <div id="gameContainer">
+      <!-- Timer Bar -->
+      <div id="timerBar">
+        <div class="timer-player">🧑‍💻 <span id="timerPlayer">---</span></div>
+        <div class="timer-clock" id="timerDisplay">00:00</div>
+        <div class="timer-status" id="timerStatus">Terminal 1 active</div>
+      </div>
+
       <div class="term-wrap">
         <div class="tab-bar">
           <div class="tab active" id="tab1" onclick="switchTab(1)">💻 Terminal 1 — CTF</div>
@@ -258,6 +321,22 @@
           </div>
         </div>
       </div>
+
+      <!-- Completion Banner -->
+      <div id="completionBanner">
+        <h3>🏆 CHALLENGE COMPLETE!</h3>
+        <p>Total time to complete both terminals:</p>
+        <div class="final-time" id="finalTimeDisplay">--:--</div>
+        <div class="final-rank" id="finalRankDisplay"></div>
+        <p style="margin-top:15px;">Your score has been saved to the leaderboard!</p>
+      </div>
+
+      <!-- Leaderboard -->
+      <div id="leaderboardSection">
+        <h3>🏅 HACKER LEADERBOARD — Fastest Times</h3>
+        <div id="lbContent"><div class="lb-loading">Loading leaderboard...</div></div>
+        <button class="lb-refresh-btn" onclick="loadLeaderboard()">⟳ Refresh Leaderboard</button>
+      </div>
     </div>
   </section>
 
@@ -288,7 +367,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, runTransaction, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { getDatabase, ref, runTransaction, onValue, push, get, query, orderByChild, limitToFirst } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
     const firebaseConfig = {
       apiKey:"AIzaSyA-6NQZuy3KM0IlUhBEZrkmLvk1jYN-BYM",
       authDomain:"hajer-portfolio.firebaseapp.com",
@@ -303,6 +382,8 @@
     const db = getDatabase(app);
     const counterRef = ref(db, 'visitorCount');
     const messagesRef = ref(db, 'messages');
+    const leaderboardRef = ref(db, 'leaderboard');
+
     if (!localStorage.getItem('counted')) {
       localStorage.setItem('counted', 'yes');
       runTransaction(counterRef, (current) => (current || 0) + 1);
@@ -318,6 +399,7 @@
         display.textContent = Math.floor(current);
       }, interval);
     });
+
     window.sendMessage = function () {
       const name = document.getElementById('formName').value.trim();
       const email = document.getElementById('formEmail').value.trim();
@@ -332,6 +414,54 @@
         setTimeout(() => success.style.display = 'none', 4000);
       }).catch(() => alert('Something went wrong. Please try again.'));
     };
+
+    // Save to leaderboard
+    window.saveToLeaderboard = function(nickname, totalSeconds, score) {
+      push(leaderboardRef, {
+        nickname: nickname,
+        timeSeconds: totalSeconds,
+        score: score,
+        date: new Date().toLocaleDateString('en-GB')
+      });
+    };
+
+    // Load leaderboard — sorted by time ascending
+    window.loadLeaderboard = async function(currentNick) {
+      const lbContent = document.getElementById('lbContent');
+      lbContent.innerHTML = '<div class="lb-loading">Loading...</div>';
+      try {
+        const snap = await get(leaderboardRef);
+        if (!snap.exists()) {
+          lbContent.innerHTML = '<div class="lb-loading">No entries yet. Be the first hacker!</div>';
+          return;
+        }
+        const entries = [];
+        snap.forEach(child => {
+          entries.push({ key: child.key, ...child.val() });
+        });
+        // Sort by time ascending (fastest first)
+        entries.sort((a, b) => a.timeSeconds - b.timeSeconds);
+
+        const medals = ['🥇','🥈','🥉'];
+        let html = '<table class="lb-table"><thead><tr><th>Rank</th><th>Hacker</th><th>Time</th><th>Score</th><th>Date</th></tr></thead><tbody>';
+        entries.forEach((e, i) => {
+          const rank = i + 1;
+          const rankLabel = rank <= 3 ? medals[rank-1] : '#' + rank;
+          const mins = String(Math.floor(e.timeSeconds / 60)).padStart(2,'0');
+          const secs = String(e.timeSeconds % 60).padStart(2,'0');
+          const timeStr = mins + ':' + secs;
+          const isMe = currentNick && e.nickname === currentNick;
+          const rowClass = isMe ? ' class="me"' : (rank === 1 ? ' class="lb-rank-1"' : rank === 2 ? ' class="lb-rank-2"' : rank === 3 ? ' class="lb-rank-3"' : '');
+          html += `<tr${rowClass}><td>${rankLabel}</td><td>${e.nickname}${isMe ? ' ← You' : ''}</td><td>${timeStr}</td><td>${e.score || 0}</td><td>${e.date || ''}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        lbContent.innerHTML = html;
+      } catch(err) {
+        lbContent.innerHTML = '<div class="lb-loading">Could not load leaderboard.</div>';
+      }
+    };
+
+    window.loadLeaderboard(null);
   </script>
 
   <script>
@@ -375,11 +505,72 @@
     }, { threshold: 0.1 });
     sections.forEach(section => observer.observe(section));
 
+    // ==================== GAME GLOBALS ====================
     let t1Done = false;
+    let playerNickname = '';
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let gameStarted = false;
+    let bothDone = false;
+    let totalScore = 0;
 
+    // ==================== NICKNAME ====================
+    function askNickname() {
+      document.getElementById('nicknameOverlay').classList.add('show');
+      setTimeout(() => document.getElementById('nicknameInput').focus(), 100);
+    }
+
+    document.getElementById('nicknameSubmit').addEventListener('click', confirmNickname);
+    document.getElementById('nicknameInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') confirmNickname();
+    });
+
+    function confirmNickname() {
+      const val = document.getElementById('nicknameInput').value.trim();
+      const errEl = document.getElementById('nicknameError');
+      if (val.length < 3 || val.length > 20) {
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      playerNickname = val;
+      document.getElementById('nicknameOverlay').classList.remove('show');
+      document.getElementById('timerPlayer').textContent = playerNickname;
+      launchGame();
+    }
+
+    // ==================== TIMER ====================
+    function startTimer() {
+      if (timerInterval) return;
+      gameStarted = true;
+      timerSeconds = 0;
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    }
+
+    function updateTimerDisplay() {
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2,'0');
+      const s = String(timerSeconds % 60).padStart(2,'0');
+      document.getElementById('timerDisplay').textContent = m + ':' + s;
+    }
+
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2,'0');
+      const s = String(sec % 60).padStart(2,'0');
+      return m + ':' + s;
+    }
+
+    // ==================== GAME LAUNCH ====================
     function launchGame() {
       document.getElementById('gameContainer').style.display = 'block';
       document.querySelector('.game-start-btn').style.display = 'none';
+      document.getElementById('timerBar').classList.add('show');
       initGames();
       document.getElementById('in1').focus();
     }
@@ -390,21 +581,68 @@
       document.getElementById('tab2').className = 'tab' + (n===2 ? ' active' : ' unlocked');
       document.getElementById('term1').className = 'terminal' + (n===1 ? ' active' : '');
       document.getElementById('term2').className = 'terminal' + (n===2 ? ' active' : '');
+      if (n === 2) document.getElementById('timerStatus').textContent = 'Terminal 2 active';
       setTimeout(() => document.getElementById(n===1 ? 'in1' : 'in2').focus(), 100);
     }
 
+    // ==================== GAME COMPLETE ====================
+    function onBothComplete(finalScore) {
+      if (bothDone) return;
+      bothDone = true;
+      stopTimer();
+      totalScore = finalScore;
+
+      const banner = document.getElementById('completionBanner');
+      banner.style.display = 'block';
+      document.getElementById('finalTimeDisplay').textContent = formatTime(timerSeconds);
+
+      // Save to Firebase
+      if (typeof window.saveToLeaderboard === 'function') {
+        window.saveToLeaderboard(playerNickname, timerSeconds, finalScore);
+      }
+
+      // Compute rank & reload leaderboard
+      setTimeout(() => {
+        if (typeof window.loadLeaderboard === 'function') {
+          window.loadLeaderboard(playerNickname).then(() => {
+            // Find rank
+            const rows = document.querySelectorAll('#lbContent .lb-table tbody tr');
+            let rank = '?';
+            rows.forEach((row, i) => {
+              if (row.classList.contains('me')) rank = i + 1;
+            });
+            document.getElementById('finalRankDisplay').textContent = rank <= 3
+              ? ['🥇 1st Place!','🥈 2nd Place!','🥉 3rd Place!'][rank-1]
+              : `🏅 Rank #${rank}`;
+          });
+        }
+      }, 1200);
+
+      // Scroll to banner
+      banner.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+
+    // ==================== GAME ENGINE ====================
     function initGames() {
+      let t1Score = 0, t2Score = 0;
+
       makeGame({
         scId:'sc1', inId:'in1', sId:'s1', lId:'l1', hId:'h1',
         termId:'term1', promptColor:'lg',
         title:'HAJER CTF HACKING SIMULATOR',
         subtitle:'Complete all 5 missions to unlock Terminal 2!',
-        onComplete: () => {
+        onFirstCommand: () => {
+          startTimer();
+        },
+        onScoreUpdate: (s) => { t1Score = s; },
+        onComplete: (score) => {
+          t1Score = score;
           t1Done = true;
           const tab2 = document.getElementById('tab2');
           tab2.className = 'tab unlocked';
           tab2.style.cursor = 'pointer';
           tab2.textContent = '🌐 Terminal 2 — Network Attack ✅ UNLOCKED!';
+          document.getElementById('timerStatus').textContent = 'Terminal 1 done! Switch to T2';
           setTimeout(() => {
             const sc = document.getElementById('sc1');
             const d = document.createElement('div');
@@ -458,6 +696,13 @@
         termId:'term2', promptColor:'t2color',
         title:'NETWORK ATTACK SIMULATION',
         subtitle:'Advanced network security challenges!',
+        onFirstCommand: () => {},
+        onScoreUpdate: (s) => { t2Score = s; },
+        onComplete: (score) => {
+          t2Score = score;
+          document.getElementById('timerStatus').textContent = '✅ BOTH COMPLETE!';
+          onBothComplete(t1Score + t2Score);
+        },
         challenges: [
           {
             intro:[{t:'lc',m:'[MISSION 1] Identify the Attack'},{t:'lw',m:'Millions of requests are flooding a web server from one IP.'},{t:'lw',m:'The server is completely unreachable by real users.'},{t:'ly',m:'What type of attack is this? Type the attack name.'}],
@@ -505,6 +750,7 @@
       const sEl=document.getElementById(cfg.sId);
       const lEl=document.getElementById(cfg.lId);
       const hEl=document.getElementById(cfg.hId);
+      let firstCmd = false;
 
       function print(text, cls, delay=0) {
         setTimeout(() => {
@@ -557,6 +803,16 @@
       function handle(raw) {
         const cmd = raw.trim().toLowerCase();
         if (!cmd) return;
+
+        // Start timer on first real command
+        if (!firstCmd && gameStarted === false && stage !== 'done') {
+          firstCmd = true;
+          if (cfg.onFirstCommand) cfg.onFirstCommand();
+          if (!timerInterval) startTimer();
+        } else if (!firstCmd) {
+          firstCmd = true;
+        }
+
         print((cfg.promptColor==='t2color'?'root@netlab:~$':'root@ctf:~$')+' '+raw,'ld');
         if (cmd==='restart') { start(); return; }
         if (cmd==='help') { print('hint | skip | restart','ly'); return; }
@@ -579,6 +835,7 @@
           if (ch.check(cmd)) {
             const pts = hintUsed ? Math.floor(ch.points*0.7) : ch.points;
             score+=pts; sEl.textContent=score;
+            if (cfg.onScoreUpdate) cfg.onScoreUpdate(score);
             lines(ch.success); blank();
             print('+'+pts+' points!'+(hintUsed?' (hint penalty)':''),'ly');
             blank();
